@@ -98,6 +98,9 @@
       font-weight: bold;
       min-height: 1.5em;
     }
+    #shareButton {
+      margin-top: 2em;
+    }
     footer {
       width: 100%;
       padding: 1em;
@@ -136,6 +139,9 @@
     <div id="userList">
       <h3>Registered Rebels</h3>
       <ul id="list"></ul>
+    </div>
+    <div id="shareButton">
+      <button onclick="goToSharePage()">📢 Go to Sharing Page</button>
     </div>
   </main>
   <footer>
@@ -201,6 +207,10 @@
       } else {
         alert('Wrong code. You are not the chosen one.');
       }
+    }
+
+    function goToSharePage() {
+      window.location.href = 'share.html';
     }
 
     window.onload = function() {
