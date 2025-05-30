@@ -115,11 +115,11 @@
     </p>
     <div id="register">
       <input type="text" id="username" placeholder="Enter your GitHub username" />
-      <button onclick="registerUser()">Register</button>
+      <button id="registerBtn" onclick="registerUser()">Register</button>
     </div>
     <div id="adminLogin">
       <input type="text" id="revealCode" placeholder="Enter secret code for admin access" />
-      <button id="verifyBtn" onclick="verifyOnce()">Verify</button>
+      <button onclick="revealAdminPanel()">Verify</button>
     </div>
     <div id="adminPanel">
       <input type="text" id="adminCode" placeholder="Confirm secret code" />
@@ -150,6 +150,10 @@
     }
 
     function registerUser() {
+      if (localStorage.getItem('registeredOnce') === 'true') {
+        alert("You have already registered. Only admins can allow another registration.");
+        return;
+      }
       const input = document.getElementById('username');
       const username = input.value.trim();
       if (username && !storedUsers.includes(username)) {
@@ -157,6 +161,11 @@
         localStorage.setItem('registeredUsers', JSON.stringify(storedUsers));
         renderList();
         input.value = '';
+        // Block further registrations
+        localStorage.setItem('registeredOnce', 'true');
+        document.getElementById('registerBtn').disabled = true;
+        document.getElementById('username').disabled = true;
+        alert("Registration complete. Only admins can allow another registration.");
       }
     }
 
@@ -174,48 +183,27 @@
       }
     }
 
-    // Only allow verify button to be pressed once unless admin code is entered
-    function verifyOnce() {
-      if (localStorage.getItem('verifyPressed') === 'true') {
-        alert("You have already verified. Only admins can verify again.");
-        return;
-      }
-      localStorage.setItem('verifyPressed', 'true');
-      document.getElementById('verifyBtn').disabled = true;
-      alert("Verification complete. Only admins can verify again.");
-    }
-
     function revealAdminPanel() {
       const revealInput = document.getElementById('revealCode').value.trim();
       if (revealInput === SECRET_CODE) {
         document.getElementById('adminPanel').style.display = 'block';
         document.getElementById('adminLogin').style.display = 'none';
-        // Allow admin to verify again by clearing the flag and re-enabling the button
-        localStorage.removeItem('verifyPressed');
-        document.getElementById('verifyBtn').disabled = false;
+        // Allow admin to enable registration again
+        localStorage.removeItem('registeredOnce');
+        document.getElementById('registerBtn').disabled = false;
+        document.getElementById('username').disabled = false;
+        alert("Admin access granted. Registration is enabled again.");
       } else {
         alert('Wrong code. You are not the chosen one.');
       }
     }
 
-    // Attach revealAdminPanel to pressing enter or clicking verify
-    document.getElementById('revealCode').addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') {
-        revealAdminPanel();
-      }
-    });
-    document.getElementById('verifyBtn').addEventListener('click', function() {
-      // Only run verifyOnce if not disabled
-      if (!this.disabled) {
-        verifyOnce();
-      }
-    });
-
-    // On page load, check if already verified
+    // On page load, check if already registered
     window.onload = function() {
       renderList();
-      if (localStorage.getItem('verifyPressed') === 'true') {
-        document.getElementById('verifyBtn').disabled = true;
+      if (localStorage.getItem('registeredOnce') === 'true') {
+        document.getElementById('registerBtn').disabled = true;
+        document.getElementById('username').disabled = true;
       }
     }
   </script>
