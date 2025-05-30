@@ -46,6 +46,44 @@
       max-width: 600px;
       line-height: 1.5em;
     }
+    #register {
+      margin-top: 2em;
+    }
+    input[type="text"] {
+      padding: 0.5em;
+      font-size: 1em;
+      border: 1px solid #00ffcc;
+      background-color: #000;
+      color: #00ffcc;
+      border-radius: 5px;
+    }
+    button {
+      margin-left: 0.5em;
+      padding: 0.5em 1em;
+      background-color: #00ffcc;
+      border: none;
+      border-radius: 5px;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #00ccaa;
+    }
+    #userList {
+      margin-top: 2em;
+      text-align: left;
+      max-width: 400px;
+    }
+    #userList ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    #userList li {
+      background-color: #111;
+      padding: 0.5em;
+      border-bottom: 1px solid #00ffcc;
+    }
     footer {
       width: 100%;
       padding: 1em;
@@ -67,9 +105,44 @@
       This is the digital front line. No bosses. No chains. Just code, community, and chaos. 
       We move in the shadows, we build in the open. If you're here, you're one of us.
     </p>
+    <div id="register">
+      <input type="text" id="username" placeholder="Enter your GitHub username" />
+      <button onclick="registerUser()">Register</button>
+    </div>
+    <div id="userList">
+      <h3>Registered Rebels</h3>
+      <ul id="list"></ul>
+    </div>
   </main>
   <footer>
     ✊ Powered by the rebellion | anti-iboss-union 2025
   </footer>
+
+  <script>
+    const list = document.getElementById('list');
+    const storedUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+
+    function renderList() {
+      list.innerHTML = '';
+      storedUsers.forEach(user => {
+        const li = document.createElement('li');
+        li.textContent = user;
+        list.appendChild(li);
+      });
+    }
+
+    function registerUser() {
+      const input = document.getElementById('username');
+      const username = input.value.trim();
+      if (username && !storedUsers.includes(username)) {
+        storedUsers.push(username);
+        localStorage.setItem('registeredUsers', JSON.stringify(storedUsers));
+        renderList();
+        input.value = '';
+      }
+    }
+
+    renderList();
+  </script>
 </body>
 </html>
