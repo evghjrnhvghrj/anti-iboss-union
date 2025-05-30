@@ -1,197 +1,257 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Share Page | anti-iboss-union</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Share | anti-iboss-union</title>
   <style>
     body {
       margin: 0;
       padding: 0;
       font-family: 'Courier New', monospace;
-      background: linear-gradient(to bottom, #000000, #0a0a0a);
+      background: #0a0a0a;
       color: #00ffcc;
       display: flex;
       flex-direction: column;
       align-items: center;
       min-height: 100vh;
+      overflow-x: hidden;
     }
-    header, footer {
+    header {
       width: 100%;
       padding: 1em;
       background-color: #111;
+      border-bottom: 2px solid #00ffcc;
       text-align: center;
+      animation: fadeIn 1s ease-in-out;
+      position: relative;
     }
-    header h1, footer {
+    header h1 {
       margin: 0;
-      font-size: 1.5em;
+      font-size: 2.5em;
       color: #00ffcc;
+    }
+    #adminTrigger {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: #000;
+      color: #00ffcc;
+      border: 1px solid #00ffcc;
+      border-radius: 5px;
+      padding: 5px 10px;
+      font-size: 0.9em;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      z-index: 10;
+    }
+    #adminTrigger:hover {
+      background: #00ccaa;
+      color: #000;
+    }
+    #adminSlide {
+      position: absolute;
+      top: 50px;
+      left: 10px;
+      background: #111;
+      border: 1px solid #00ffcc;
+      border-radius: 8px;
+      padding: 1em;
+      display: none;
+      flex-direction: column;
+      animation: slideOut 0.5s forwards;
+    }
+    #adminSlide.active {
+      display: flex;
+      animation: slideInFromLeft 0.5s forwards;
+    }
+    #adminSlide input {
+      margin-bottom: 0.5em;
+      padding: 0.5em;
+      font-size: 1em;
+      background: #000;
+      color: #00ffcc;
+      border: 1px solid #00ffcc;
+      border-radius: 5px;
     }
     main {
       flex: 1;
-      width: 100%;
+      width: 90%;
       max-width: 800px;
       padding: 2em;
-    }
-    h2 {
       text-align: center;
-      margin-bottom: 1em;
+      animation: slideIn 1s ease-in-out;
     }
-    .form-group, .admin-section {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5em;
-      margin-bottom: 2em;
-    }
-    input, textarea {
-      padding: 0.75em;
-      border-radius: 5px;
+    input[type="text"] {
+      padding: 0.5em;
+      font-size: 1em;
       border: 1px solid #00ffcc;
       background-color: #000;
       color: #00ffcc;
-      font-size: 1em;
+      border-radius: 5px;
+      margin: 0.5em 0;
+      width: 100%;
     }
     button {
-      padding: 0.75em;
+      padding: 0.5em 1em;
       background-color: #00ffcc;
-      color: #000;
-      font-weight: bold;
       border: none;
       border-radius: 5px;
+      color: #000;
+      font-weight: bold;
       cursor: pointer;
+      transition: background-color 0.3s;
     }
     button:hover {
       background-color: #00ccaa;
     }
+    #posts {
+      margin-top: 2em;
+      width: 100%;
+      text-align: left;
+      animation: fadeIn 1.5s ease-in-out;
+    }
     .post {
       background-color: #111;
-      padding: 1em;
-      margin-bottom: 1.5em;
-      border-radius: 10px;
       border: 1px solid #00ffcc;
+      border-radius: 8px;
+      padding: 1em;
+      margin-bottom: 1em;
+      animation: fadeInUp 0.6s ease-in-out;
     }
     .comment {
-      margin-top: 0.5em;
-      padding: 0.5em;
-      border-top: 1px solid #333;
-    }
-    .delete-btn {
-      background-color: #ff5555;
-      color: #fff;
       margin-left: 1em;
+      padding-left: 1em;
+      border-left: 2px solid #00ffcc;
+      margin-top: 0.5em;
+      animation: fadeInUp 0.5s ease-in-out;
     }
-    .delete-btn:hover {
-      background-color: #cc0000;
+    footer {
+      width: 100%;
+      padding: 1em;
+      text-align: center;
+      font-size: 0.9em;
+      color: #777;
+      border-top: 1px solid #333;
+      background-color: #111;
+      animation: fadeIn 2s ease-in-out;
     }
-    .hidden {
-      display: none;
+    @keyframes fadeIn {
+      from { opacity: 0; } to { opacity: 1; }
+    }
+    @keyframes slideIn {
+      from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes fadeInUp {
+      from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes slideInFromLeft {
+      from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; }
+    }
+    @keyframes slideOut {
+      from { transform: translateX(0); opacity: 1; } to { transform: translateX(-100%); opacity: 0; }
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>anti-iboss-union | Share Zone</h1>
+    <h1>Share Zone</h1>
+    <div id="adminTrigger" onclick="toggleAdminSlide()">Admin?</div>
+    <div id="adminSlide">
+      <input type="text" id="adminCodeInput" placeholder="Enter admin code" />
+      <button onclick="verifyAdminCode()">Verify</button>
+    </div>
   </header>
   <main>
-    <h2>Drop Links. Drop Thoughts.</h2>
-    <div class="form-group">
-      <input type="text" id="postUrl" placeholder="Enter website URL to share" />
-      <button onclick="addPost()">Share</button>
+    <input type="text" id="urlInput" placeholder="Enter a website URL" />
+    <button onclick="shareLink()">Share</button>
+    <div id="adminPanel" style="margin-top:2em; display:none">
+      <input type="text" id="deletePostId" placeholder="Post ID to delete" />
+      <button onclick="deletePost()">Delete Post</button><br><br>
+      <input type="text" id="deleteCommentId" placeholder="Comment ID to delete" />
+      <button onclick="deleteComment()">Delete Comment</button>
     </div>
-    <div class="form-group">
-      <input type="text" id="adminCodeInput" placeholder="Enter admin code" />
-      <button onclick="unlockAdmin()">Unlock Admin Panel</button>
-    </div>
-    <div id="postsContainer"></div>
+    <div id="posts"></div>
   </main>
   <footer>
-    ✊ Powered by the rebellion | anti-iboss-union 2025
+    ✊ anti-iboss-union 2025
   </footer>
   <script>
     const SECRET_CODE = 'delete4freedom';
-    let isAdmin = false;
+    let posts = JSON.parse(localStorage.getItem('sharedPosts')) || [];
 
-    function savePosts(posts) {
-      localStorage.setItem('sharedPosts', JSON.stringify(posts));
+    function generateId() {
+      return '_' + Math.random().toString(36).substr(2, 9);
     }
 
-    function getPosts() {
-      return JSON.parse(localStorage.getItem('sharedPosts')) || [];
+    function shareLink() {
+      const url = document.getElementById('urlInput').value.trim();
+      if (!url) return;
+      const post = { id: generateId(), url, comments: [] };
+      posts.push(post);
+      localStorage.setItem('sharedPosts', JSON.stringify(posts));
+      renderPosts();
+      document.getElementById('urlInput').value = '';
+    }
+
+    function addComment(postId) {
+      const input = document.getElementById('comment-' + postId);
+      const comment = input.value.trim();
+      if (!comment) return;
+      const post = posts.find(p => p.id === postId);
+      post.comments.push({ id: generateId(), text: comment });
+      localStorage.setItem('sharedPosts', JSON.stringify(posts));
+      renderPosts();
+    }
+
+    function deletePost() {
+      const postId = document.getElementById('deletePostId').value.trim();
+      posts = posts.filter(p => p.id !== postId);
+      localStorage.setItem('sharedPosts', JSON.stringify(posts));
+      renderPosts();
+    }
+
+    function deleteComment() {
+      const commentId = document.getElementById('deleteCommentId').value.trim();
+      posts.forEach(post => {
+        post.comments = post.comments.filter(c => c.id !== commentId);
+      });
+      localStorage.setItem('sharedPosts', JSON.stringify(posts));
+      renderPosts();
     }
 
     function renderPosts() {
-      const container = document.getElementById('postsContainer');
+      const container = document.getElementById('posts');
       container.innerHTML = '';
-      const posts = getPosts();
-      posts.forEach((post, i) => {
+      posts.forEach(post => {
         const div = document.createElement('div');
         div.className = 'post';
-        div.innerHTML = `
-          <p><strong>🔗 <a href="${post.url}" target="_blank">${post.url}</a></strong></p>
-          <div>
-            <input type="text" placeholder="Add a comment..." id="commentInput${i}" />
-            <button onclick="addComment(${i})">Comment</button>
-            ${isAdmin ? `<button class='delete-btn' onclick="deletePost(${i})">Delete Post</button>` : ''}
-          </div>
-          <div>
-            ${post.comments.map((comment, ci) => `
-              <div class="comment">
-                ${comment}
-                ${isAdmin ? `<button class='delete-btn' onclick="deleteComment(${i}, ${ci})">X</button>` : ''}
-              </div>`).join('')}
-          </div>
-        `;
+        div.innerHTML = `<strong>Post ID:</strong> ${post.id}<br><a href="${post.url}" target="_blank">${post.url}</a><br>
+                          <input id="comment-${post.id}" placeholder="Add comment..." />
+                          <button onclick="addComment('${post.id}')">Comment</button>
+                          <div>${post.comments.map(c => `<div class='comment'><strong>ID:</strong> ${c.id}<br>${c.text}</div>`).join('')}</div>`;
         container.appendChild(div);
       });
     }
 
-    function addPost() {
-      const url = document.getElementById('postUrl').value.trim();
-      if (!url) return;
-      const posts = getPosts();
-      posts.unshift({ url, comments: [] });
-      savePosts(posts);
-      document.getElementById('postUrl').value = '';
-      renderPosts();
+    function toggleAdminSlide() {
+      const slide = document.getElementById('adminSlide');
+      slide.classList.toggle('active');
     }
 
-    function addComment(index) {
-      const input = document.getElementById(`commentInput${index}`);
-      const comment = input.value.trim();
-      if (!comment) return;
-      const posts = getPosts();
-      posts[index].comments.push(comment);
-      savePosts(posts);
-      renderPosts();
-    }
-
-    function deletePost(index) {
-      const posts = getPosts();
-      posts.splice(index, 1);
-      savePosts(posts);
-      renderPosts();
-    }
-
-    function deleteComment(postIndex, commentIndex) {
-      const posts = getPosts();
-      posts[postIndex].comments.splice(commentIndex, 1);
-      savePosts(posts);
-      renderPosts();
-    }
-
-    function unlockAdmin() {
-      const input = document.getElementById('adminCodeInput');
-      if (input.value.trim() === SECRET_CODE) {
-        isAdmin = true;
-        alert('Admin panel unlocked');
-        renderPosts();
+    function verifyAdminCode() {
+      const code = document.getElementById('adminCodeInput').value.trim();
+      if (code === SECRET_CODE) {
+        document.getElementById('adminPanel').style.display = 'block';
+        document.getElementById('adminSlide').style.display = 'none';
       } else {
-        alert('Incorrect code');
+        alert("Wrong code.");
       }
-      input.value = '';
     }
 
-    renderPosts();
+    window.onload = () => {
+      renderPosts();
+    }
   </script>
 </body>
 </html>
