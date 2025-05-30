@@ -174,15 +174,15 @@
       }
     }
 
-    // Only allow verify button to be pressed once unless admin
+    // Only allow verify button to be pressed once unless admin code is entered
     function verifyOnce() {
       if (localStorage.getItem('verifyPressed') === 'true') {
-        alert("You have already joined . Only admins can join again.");
+        alert("You have already verified. Only admins can verify again.");
         return;
       }
       localStorage.setItem('verifyPressed', 'true');
-      revealAdminPanel();
       document.getElementById('verifyBtn').disabled = true;
+      alert("Verification complete. Only admins can verify again.");
     }
 
     function revealAdminPanel() {
@@ -190,12 +190,26 @@
       if (revealInput === SECRET_CODE) {
         document.getElementById('adminPanel').style.display = 'block';
         document.getElementById('adminLogin').style.display = 'none';
-        // Allow admin to verify again by clearing the flag
+        // Allow admin to verify again by clearing the flag and re-enabling the button
         localStorage.removeItem('verifyPressed');
+        document.getElementById('verifyBtn').disabled = false;
       } else {
-        alert('Wrong code. You are not admin.');
+        alert('Wrong code. You are not the chosen one.');
       }
     }
+
+    // Attach revealAdminPanel to pressing enter or clicking verify
+    document.getElementById('revealCode').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        revealAdminPanel();
+      }
+    });
+    document.getElementById('verifyBtn').addEventListener('click', function() {
+      // Only run verifyOnce if not disabled
+      if (!this.disabled) {
+        verifyOnce();
+      }
+    });
 
     // On page load, check if already verified
     window.onload = function() {
