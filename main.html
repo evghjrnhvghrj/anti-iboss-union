@@ -46,7 +46,7 @@
       max-width: 600px;
       line-height: 1.5em;
     }
-    #register, #adminPanel {
+    #register, #adminLogin, #adminPanel {
       margin-top: 2em;
     }
     input[type="text"] {
@@ -84,6 +84,9 @@
       padding: 0.5em;
       border-bottom: 1px solid #00ffcc;
     }
+    #adminPanel {
+      display: none;
+    }
     footer {
       width: 100%;
       padding: 1em;
@@ -109,8 +112,12 @@
       <input type="text" id="username" placeholder="Enter your GitHub username" />
       <button onclick="registerUser()">Register</button>
     </div>
+    <div id="adminLogin">
+      <input type="text" id="revealCode" placeholder="Enter secret code for admin access" />
+      <button onclick="revealAdminPanel()">Verify</button>
+    </div>
     <div id="adminPanel">
-      <input type="text" id="adminCode" placeholder="Enter secret code" />
+      <input type="text" id="adminCode" placeholder="Confirm secret code" />
       <input type="text" id="deleteUser" placeholder="GitHub username to delete" />
       <button onclick="deleteUser()">Delete Member</button>
     </div>
@@ -159,6 +166,16 @@
         document.getElementById('deleteUser').value = '';
       } else {
         alert('Invalid code or user not found.');
+      }
+    }
+
+    function revealAdminPanel() {
+      const revealInput = document.getElementById('revealCode').value.trim();
+      if (revealInput === SECRET_CODE) {
+        document.getElementById('adminPanel').style.display = 'block';
+        document.getElementById('adminLogin').style.display = 'none';
+      } else {
+        alert('Wrong code. You are not the chosen one.');
       }
     }
 
