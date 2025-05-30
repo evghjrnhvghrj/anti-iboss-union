@@ -3,160 +3,192 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sharing Page | anti-iboss-union</title>
+  <title>Share Page | anti-iboss-union</title>
   <style>
     body {
+      margin: 0;
+      padding: 0;
       font-family: 'Courier New', monospace;
-      background-color: #000;
+      background: linear-gradient(to bottom, #000000, #0a0a0a);
       color: #00ffcc;
-      padding: 2em;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
     }
-    h1 {
+    header, footer {
+      width: 100%;
+      padding: 1em;
+      background-color: #111;
       text-align: center;
     }
-    input, button, textarea {
-      font-family: inherit;
-      margin: 0.5em 0;
-      padding: 0.5em;
-      border: 1px solid #00ffcc;
-      background: #111;
+    header h1, footer {
+      margin: 0;
+      font-size: 1.5em;
       color: #00ffcc;
+    }
+    main {
+      flex: 1;
+      width: 100%;
+      max-width: 800px;
+      padding: 2em;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 1em;
+    }
+    .form-group, .admin-section {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5em;
+      margin-bottom: 2em;
+    }
+    input, textarea {
+      padding: 0.75em;
       border-radius: 5px;
+      border: 1px solid #00ffcc;
+      background-color: #000;
+      color: #00ffcc;
+      font-size: 1em;
     }
     button {
-      cursor: pointer;
+      padding: 0.75em;
       background-color: #00ffcc;
       color: #000;
       font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #00ccaa;
     }
     .post {
-      border: 1px solid #00ffcc;
+      background-color: #111;
       padding: 1em;
-      margin: 1em 0;
+      margin-bottom: 1.5em;
+      border-radius: 10px;
+      border: 1px solid #00ffcc;
     }
     .comment {
-      margin-left: 1em;
+      margin-top: 0.5em;
       padding: 0.5em;
-      border-left: 2px solid #00ffcc;
+      border-top: 1px solid #333;
     }
-    #adminPanel {
+    .delete-btn {
+      background-color: #ff5555;
+      color: #fff;
+      margin-left: 1em;
+    }
+    .delete-btn:hover {
+      background-color: #cc0000;
+    }
+    .hidden {
       display: none;
-      margin-top: 2em;
-      border-top: 1px solid #00ffcc;
-      padding-top: 1em;
     }
   </style>
 </head>
 <body>
-  <h1>📡 Share Intel</h1>
-  <input type="text" id="newUrl" placeholder="Enter website URL" />
-  <button onclick="shareUrl()">Share</button>
-
-  <div>
-    <input type="text" id="adminCodeInput" placeholder="Enter secret admin code" />
-    <button onclick="verifyAdmin()">Verify Admin</button>
-  </div>
-
-  <div id="adminPanel">
-    <p>🔒 Admin Tools Enabled</p>
-    <p>Click delete to remove posts or individual comments.</p>
-  </div>
-
-  <div id="posts"></div>
-
+  <header>
+    <h1>anti-iboss-union | Share Zone</h1>
+  </header>
+  <main>
+    <h2>Drop Links. Drop Thoughts.</h2>
+    <div class="form-group">
+      <input type="text" id="postUrl" placeholder="Enter website URL to share" />
+      <button onclick="addPost()">Share</button>
+    </div>
+    <div class="form-group">
+      <input type="text" id="adminCodeInput" placeholder="Enter admin code" />
+      <button onclick="unlockAdmin()">Unlock Admin Panel</button>
+    </div>
+    <div id="postsContainer"></div>
+  </main>
+  <footer>
+    ✊ Powered by the rebellion | anti-iboss-union 2025
+  </footer>
   <script>
-    const postsContainer = document.getElementById('posts');
-    const adminPanel = document.getElementById('adminPanel');
+    const SECRET_CODE = 'delete4freedom';
     let isAdmin = false;
-    const ADMIN_SECRET = 'delete4freedom';
 
-    let sharedPosts = JSON.parse(localStorage.getItem('sharedPosts')) || [];
+    function savePosts(posts) {
+      localStorage.setItem('sharedPosts', JSON.stringify(posts));
+    }
 
-    function savePosts() {
-      localStorage.setItem('sharedPosts', JSON.stringify(sharedPosts));
+    function getPosts() {
+      return JSON.parse(localStorage.getItem('sharedPosts')) || [];
     }
 
     function renderPosts() {
-      postsContainer.innerHTML = '';
-      sharedPosts.forEach((post, postIndex) => {
-        const postDiv = document.createElement('div');
-        postDiv.className = 'post';
-
-        const link = document.createElement('a');
-        link.href = post.url;
-        link.target = '_blank';
-        link.textContent = post.url;
-        postDiv.appendChild(link);
-
-        if (isAdmin) {
-          const deletePostBtn = document.createElement('button');
-          deletePostBtn.textContent = '🗑 Delete Post';
-          deletePostBtn.onclick = () => {
-            sharedPosts.splice(postIndex, 1);
-            savePosts();
-            renderPosts();
-          };
-          postDiv.appendChild(deletePostBtn);
-        }
-
-        const commentInput = document.createElement('input');
-        commentInput.placeholder = 'Add a comment';
-        const commentBtn = document.createElement('button');
-        commentBtn.textContent = 'Comment';
-        commentBtn.onclick = () => {
-          const comment = commentInput.value.trim();
-          if (comment) {
-            post.comments.push(comment);
-            savePosts();
-            renderPosts();
-          }
-        };
-        postDiv.appendChild(document.createElement('br'));
-        postDiv.appendChild(commentInput);
-        postDiv.appendChild(commentBtn);
-
-        post.comments.forEach((comment, commentIndex) => {
-          const commentDiv = document.createElement('div');
-          commentDiv.className = 'comment';
-          commentDiv.textContent = comment;
-
-          if (isAdmin) {
-            const deleteCommentBtn = document.createElement('button');
-            deleteCommentBtn.textContent = '🗑';
-            deleteCommentBtn.onclick = () => {
-              post.comments.splice(commentIndex, 1);
-              savePosts();
-              renderPosts();
-            };
-            commentDiv.appendChild(deleteCommentBtn);
-          }
-
-          postDiv.appendChild(commentDiv);
-        });
-
-        postsContainer.appendChild(postDiv);
+      const container = document.getElementById('postsContainer');
+      container.innerHTML = '';
+      const posts = getPosts();
+      posts.forEach((post, i) => {
+        const div = document.createElement('div');
+        div.className = 'post';
+        div.innerHTML = `
+          <p><strong>🔗 <a href="${post.url}" target="_blank">${post.url}</a></strong></p>
+          <div>
+            <input type="text" placeholder="Add a comment..." id="commentInput${i}" />
+            <button onclick="addComment(${i})">Comment</button>
+            ${isAdmin ? `<button class='delete-btn' onclick="deletePost(${i})">Delete Post</button>` : ''}
+          </div>
+          <div>
+            ${post.comments.map((comment, ci) => `
+              <div class="comment">
+                ${comment}
+                ${isAdmin ? `<button class='delete-btn' onclick="deleteComment(${i}, ${ci})">X</button>` : ''}
+              </div>`).join('')}
+          </div>
+        `;
+        container.appendChild(div);
       });
     }
 
-    function shareUrl() {
-      const url = document.getElementById('newUrl').value.trim();
-      if (url) {
-        sharedPosts.push({ url, comments: [] });
-        savePosts();
-        renderPosts();
-        document.getElementById('newUrl').value = '';
-      }
+    function addPost() {
+      const url = document.getElementById('postUrl').value.trim();
+      if (!url) return;
+      const posts = getPosts();
+      posts.unshift({ url, comments: [] });
+      savePosts(posts);
+      document.getElementById('postUrl').value = '';
+      renderPosts();
     }
 
-    function verifyAdmin() {
-      const code = document.getElementById('adminCodeInput').value.trim();
-      if (code === ADMIN_SECRET) {
+    function addComment(index) {
+      const input = document.getElementById(`commentInput${index}`);
+      const comment = input.value.trim();
+      if (!comment) return;
+      const posts = getPosts();
+      posts[index].comments.push(comment);
+      savePosts(posts);
+      renderPosts();
+    }
+
+    function deletePost(index) {
+      const posts = getPosts();
+      posts.splice(index, 1);
+      savePosts(posts);
+      renderPosts();
+    }
+
+    function deleteComment(postIndex, commentIndex) {
+      const posts = getPosts();
+      posts[postIndex].comments.splice(commentIndex, 1);
+      savePosts(posts);
+      renderPosts();
+    }
+
+    function unlockAdmin() {
+      const input = document.getElementById('adminCodeInput');
+      if (input.value.trim() === SECRET_CODE) {
         isAdmin = true;
-        adminPanel.style.display = 'block';
+        alert('Admin panel unlocked');
         renderPosts();
       } else {
-        alert('Wrong code. Access denied.');
+        alert('Incorrect code');
       }
+      input.value = '';
     }
 
     renderPosts();
