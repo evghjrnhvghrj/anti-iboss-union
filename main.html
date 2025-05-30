@@ -92,6 +92,12 @@
     #adminPanel {
       display: none;
     }
+    #registerMessage {
+      color: #00ffcc;
+      margin-top: 1em;
+      font-weight: bold;
+      min-height: 1.5em;
+    }
     footer {
       width: 100%;
       padding: 1em;
@@ -116,6 +122,7 @@
     <div id="register">
       <input type="text" id="username" placeholder="Enter your GitHub username" />
       <button id="registerBtn" onclick="registerUser()">Register</button>
+      <div id="registerMessage"></div>
     </div>
     <div id="adminLogin">
       <input type="text" id="revealCode" placeholder="Enter secret code for admin access" />
@@ -151,7 +158,7 @@
 
     function registerUser() {
       if (localStorage.getItem('registeredOnce') === 'true') {
-        alert("You have already registered. Only admins can allow another registration.");
+        document.getElementById('registerMessage').textContent = "You have already registered. Only admins can allow another registration.";
         return;
       }
       const input = document.getElementById('username');
@@ -165,7 +172,7 @@
         localStorage.setItem('registeredOnce', 'true');
         document.getElementById('registerBtn').disabled = true;
         document.getElementById('username').disabled = true;
-        alert("Registration complete. Only admins can allow another registration.");
+        document.getElementById('registerMessage').textContent = "Registration complete. Only admins can allow another registration.";
       }
     }
 
@@ -186,13 +193,14 @@
     function revealAdminPanel() {
       const revealInput = document.getElementById('revealCode').value.trim();
       if (revealInput === SECRET_CODE) {
-        document.getElementById('adminPanel').style.display = 'block';
-        document.getElementById('adminLogin').style.display = 'none';
-        // Allow admin to enable registration again
+        // Enable registration again
         localStorage.removeItem('registeredOnce');
         document.getElementById('registerBtn').disabled = false;
         document.getElementById('username').disabled = false;
-        alert("Admin access granted. Registration is enabled again.");
+        document.getElementById('registerMessage').textContent = "You can register again!";
+        // Optionally, show the admin panel too:
+        document.getElementById('adminPanel').style.display = 'block';
+        document.getElementById('adminLogin').style.display = 'none';
       } else {
         alert('Wrong code. You are not the chosen one.');
       }
@@ -204,6 +212,7 @@
       if (localStorage.getItem('registeredOnce') === 'true') {
         document.getElementById('registerBtn').disabled = true;
         document.getElementById('username').disabled = true;
+        document.getElementById('registerMessage').textContent = "You have already registered. Only admins can allow another registration.";
       }
     }
   </script>
