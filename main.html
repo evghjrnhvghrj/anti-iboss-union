@@ -168,7 +168,6 @@
         localStorage.setItem('registeredUsers', JSON.stringify(storedUsers));
         renderList();
         input.value = '';
-        // Block further registrations
         localStorage.setItem('registeredOnce', 'true');
         document.getElementById('registerBtn').disabled = true;
         document.getElementById('username').disabled = true;
@@ -193,12 +192,10 @@
     function revealAdminPanel() {
       const revealInput = document.getElementById('revealCode').value.trim();
       if (revealInput === SECRET_CODE) {
-        // Enable registration again
         localStorage.removeItem('registeredOnce');
         document.getElementById('registerBtn').disabled = false;
         document.getElementById('username').disabled = false;
         document.getElementById('registerMessage').textContent = "You can register again!";
-        // Optionally, show the admin panel too:
         document.getElementById('adminPanel').style.display = 'block';
         document.getElementById('adminLogin').style.display = 'none';
       } else {
@@ -206,7 +203,6 @@
       }
     }
 
-    // On page load, check if already registered
     window.onload = function() {
       renderList();
       if (localStorage.getItem('registeredOnce') === 'true') {
