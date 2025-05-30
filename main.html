@@ -46,7 +46,7 @@
       max-width: 600px;
       line-height: 1.5em;
     }
-    #register {
+    #register, #adminPanel {
       margin-top: 2em;
     }
     input[type="text"] {
@@ -109,6 +109,11 @@
       <input type="text" id="username" placeholder="Enter your GitHub username" />
       <button onclick="registerUser()">Register</button>
     </div>
+    <div id="adminPanel">
+      <input type="text" id="adminCode" placeholder="Enter secret code" />
+      <input type="text" id="deleteUser" placeholder="GitHub username to delete" />
+      <button onclick="deleteUser()">Delete Member</button>
+    </div>
     <div id="userList">
       <h3>Registered Rebels</h3>
       <ul id="list"></ul>
@@ -121,6 +126,7 @@
   <script>
     const list = document.getElementById('list');
     const storedUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+    const SECRET_CODE = 'delete4freedom';
 
     function renderList() {
       list.innerHTML = '';
@@ -139,6 +145,20 @@
         localStorage.setItem('registeredUsers', JSON.stringify(storedUsers));
         renderList();
         input.value = '';
+      }
+    }
+
+    function deleteUser() {
+      const code = document.getElementById('adminCode').value.trim();
+      const target = document.getElementById('deleteUser').value.trim();
+      if (code === SECRET_CODE && storedUsers.includes(target)) {
+        const index = storedUsers.indexOf(target);
+        storedUsers.splice(index, 1);
+        localStorage.setItem('registeredUsers', JSON.stringify(storedUsers));
+        renderList();
+        document.getElementById('deleteUser').value = '';
+      } else {
+        alert('Invalid code or user not found.');
       }
     }
 
