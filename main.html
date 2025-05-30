@@ -5,97 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Main Page | anti-iboss-union</title>
   <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Courier New', monospace;
-      background: linear-gradient(to bottom, #000000, #0a0a0a);
-      color: #00ffcc;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-    }
-    header {
-      width: 100%;
-      padding: 1em;
-      background-color: #111;
-      border-bottom: 2px solid #00ffcc;
-      text-align: center;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 2.5em;
-      color: #00ffcc;
-    }
-    main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 2em;
-      text-align: center;
-    }
-    main h2 {
-      font-size: 2em;
-      margin-bottom: 1em;
-    }
-    main p {
-      font-size: 1.2em;
-      max-width: 600px;
-      line-height: 1.5em;
-    }
-    #register, #adminLogin, #adminPanel {
-      margin-top: 2em;
-    }
-    input[type="text"] {
-      padding: 0.5em;
-      font-size: 1em;
-      border: 1px solid #00ffcc;
-      background-color: #000;
-      color: #00ffcc;
-      border-radius: 5px;
-    }
-    button {
-      margin-left: 0.5em;
-      padding: 0.5em 1em;
-      background-color: #00ffcc;
-      border: none;
-      border-radius: 5px;
-      color: #000;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #00ccaa;
-    }
-    #userList {
-      margin-top: 2em;
-      text-align: left;
-      max-width: 400px;
-    }
-    #userList ul {
-      list-style-type: none;
-      padding: 0;
-    }
-    #userList li {
-      background-color: #111;
-      padding: 0.5em;
-      border-bottom: 1px solid #00ffcc;
-    }
-    #adminPanel {
-      display: none;
-    }
-    footer {
-      width: 100%;
-      padding: 1em;
-      text-align: center;
-      font-size: 0.9em;
-      color: #777;
-      border-top: 1px solid #333;
-      background-color: #111;
-    }
+    /* ... your existing styles ... */
   </style>
 </head>
 <body>
@@ -112,13 +22,9 @@
       <input type="text" id="username" placeholder="Enter your GitHub username" />
       <button onclick="registerUser()">Register</button>
     </div>
-
-
-
-    
     <div id="adminLogin">
       <input type="text" id="revealCode" placeholder="Enter secret code for admin access" />
-      <button onclick="revealAdminPanel()">Verify</button>
+      <button id="verifyBtn" onclick="verifyOnce()">Verify</button>
     </div>
     <div id="adminPanel">
       <input type="text" id="adminCode" placeholder="Confirm secret code" />
@@ -173,17 +79,41 @@
       }
     }
 
+    // --- NEW CODE BELOW ---
+
+    // Only allow verify button to be pressed once unless admin
+    function verifyOnce() {
+      // Check if already pressed
+      if (localStorage.getItem('verifyPressed') === 'true') {
+        alert("You have already verified. Only admins can verify again.");
+        return;
+      }
+      // Mark as pressed
+      localStorage.setItem('verifyPressed', 'true');
+      revealAdminPanel();
+      // Disable button
+      document.getElementById('verifyBtn').disabled = true;
+    }
+
     function revealAdminPanel() {
       const revealInput = document.getElementById('revealCode').value.trim();
       if (revealInput === SECRET_CODE) {
         document.getElementById('adminPanel').style.display = 'block';
         document.getElementById('adminLogin').style.display = 'none';
+        // Allow admin to verify again by clearing the flag
+        localStorage.removeItem('verifyPressed');
       } else {
         alert('Wrong code. You are not the chosen one.');
       }
     }
 
-    renderList();
+    // On page load, check if already verified
+    window.onload = function() {
+      renderList();
+      if (localStorage.getItem('verifyPressed') === 'true') {
+        document.getElementById('verifyBtn').disabled = true;
+      }
+    }
   </script>
 </body>
 </html>
