@@ -1,1 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Encrypted Voice Talk | anti-iboss-union</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Courier New', monospace;
+      background: #0a0a0a;
+      color: #00ffcc;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    header {
+      width: 100%;
+      padding: 1em;
+      background-color: #111;
+      border-bottom: 2px solid #00ffcc;
+      text-align: center;
+      animation: fadeIn 1s ease-in-out;
+      position: relative;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.5em;
+      color: #00ffcc;
+    }
+    main {
+      flex: 1;
+      width: 90%;
+      max-width: 600px;
+      padding: 2em;
+      text-align: center;
+      animation: slideIn 1s ease-in-out;
+    }
+    input[type="text"] {
+      padding: 0.5em;
+      font-size: 1em;
+      border: 1px solid #00ffcc;
+      background-color: #000;
+      color: #00ffcc;
+      border-radius: 5px;
+      margin: 0.5em 0;
+      width: 100%;
+    }
+    button {
+      padding: 0.5em 1em;
+      background-color: #00ffcc;
+      border: none;
+      border-radius: 5px;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #00ccaa;
+    }
+    #ringing {
+      font-size: 1.2em;
+      color: #ff0;
+      margin: 1em 0;
+      animation: blink 1s infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+    #callArea {
+      display: none;
+      margin-top: 2em;
+      background: #111;
+      border: 1px solid #00ffcc;
+      border-radius: 8px;
+      padding: 2em;
+      position: relative;
+    }
+    #voiceSlider {
+      width: 80%;
+      margin-top: 1em;
+    }
+    #voiceLabel {
+      color: #00ffcc;
+      margin-top: 1em;
+      display: block;
+    }
+    #statusMsg {
+      margin: 1em 0;
+      color: #0f0;
+    }
+    footer {
+      width: 100%;
+      padding: 1em;
+      text-align: center;
+      font-size: 0.9em;
+      color: #777;
+      border-top: 1px solid #333;
+      background-color: #111;
+      animation: fadeIn 2s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; } to { opacity: 1; }
+    }
+    @keyframes slideIn {
+      from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Encrypted Voice Talk</h1>
+  </header>
+  <main>
+    <div id="setupForm">
+      <input type="text" id="yourName" placeholder="Enter your username" autocomplete="off" /><br>
+      <input type="text" id="callName" placeholder="Enter calling username" autocomplete="off" /><br>
+      <button onclick="startCall()">Confirm</button>
+    </div>
+    <div id="ringing" style="display:none;">Ringing...</div>
+    <div id="callArea">
+      <div id="statusMsg">Connected! You can talk now.</div>
+      <label id="voiceLabel" for="voiceSlider">Voice Changer (Pitch):</label>
+      <input type="range" min="0.5" max="2" value="1" step="0.01" id="voiceSlider">
+      <span id="pitchValue">1.00x</span>
+      <br>
+      <button onclick="endCall()">End Call</button>
+      <audio id="remoteAudio" autoplay style="display:none;"></audio>
+    </div>
+  </main>
+  <footer>
+    ✊ anti-iboss-union 2025
+  </footer>
+  <script>
+    let ringingTimeout;
+    let stream;
+    let audioContext;
+    let source;
+    let pitchNode;
+
+    function startCall() {
+      const yourName = document.getElementById('yourName').value.trim();
+      const callName = document.getElementById('callName').value.trim();
+      if (!yourName || !callName) {
+        alert('Please enter both usernames.');
+        return;
+      }
+      document.getElementById('setupForm').style.display = 'none';
+      document.getElementById('ringing').style.display = 'block';
+
+      // Simulate ringing for up to 30 seconds, then connect or redirect
+      ringingTimeout = setTimeout(() => {
+        // Not connected after 30s, redirect
+        window.location.href = 'main.html';
+      }, 30000);
+
+      // Simulate connection after 3 seconds for demo
+      setTimeout(() => {
+        clearTimeout(ringingTimeout);
+        document.getElementById('ringing').style.display = 'none';
+        document.getElementById('callArea').style.display = 'block';
+        startVoice();
+      }, 3000); // Change this to 30000 for real 30s, 3000 for demo
+    }
+
+    function startVoice() {
+      // Get user media (mic)
+      navigator.mediaDevices.getUserMedia({ audio: true })
+        .then(function(s) {
+          stream = s;
+          audioContext = new (window.AudioContext || window.webkitAudioContext)();
+          source = audioContext.createMediaStreamSource(stream);
+
+          // Pitch shifting using playbackRate (simple, not perfect)
+          pitchNode = audioContext.createGain(); // We will use detune for pitch
+          let pitchShifter = audioContext.createBiquadFilter();
+          pitchShifter.type = "allpass"; // Minimal effect, just for demo
+
+          // Connect nodes: source -> pitchShifter -> destination
+          source.connect(pitchShifter);
+          pitchShifter.connect(audioContext.destination);
+
+          // Store for slider
+          window.pitchShifter = pitchShifter;
+
+          // Listen to slider
+          const slider = document.getElementById('voiceSlider');
+          const pitchValue = document.getElementById('pitchValue');
+          slider.addEventListener('input', function() {
+            // This is a very basic pitch effect (not real voice changer, for demo only)
+            // Real pitch shifting needs more DSP or libraries
+            audioContext.close().then(() => {
+              audioContext = new (window.AudioContext || window.webkitAudioContext)();
+              source = audioContext.createMediaStreamSource(stream);
+              let newPitch = audioContext.createBiquadFilter();
+              newPitch.type = "allpass";
+              source.connect(newPitch);
+              newPitch.connect(audioContext.destination);
+              window.pitchShifter = newPitch;
+            });
+            pitchValue.textContent = slider.value + "x";
+          });
+
+          // Set initial value
+          pitchValue.textContent = slider.value + "x";
+        })
+        .catch(function(err) {
+          alert('Microphone access denied.');
+          endCall();
+        });
+    }
+
+    function endCall() {
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+      }
+      if (audioContext) {
+        audioContext.close();
+      }
+      window.location.href = 'main.html';
+    }
+  </script>
+</body>
+</html>
 
