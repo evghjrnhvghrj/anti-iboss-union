@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Main Page | anti-iboss-union</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Main | anti-iboss-union</title>
   <style>
     body {
       margin: 0;
       padding: 0;
       font-family: 'Courier New', monospace;
-      background: linear-gradient(to bottom, #000000, #0a0a0a);
+      background: #0a0a0a;
       color: #00ffcc;
       display: flex;
       flex-direction: column;
@@ -17,7 +17,6 @@
       min-height: 100vh;
       overflow-x: hidden;
     }
-
     header {
       width: 100%;
       padding: 1em;
@@ -27,66 +26,55 @@
       position: relative;
       animation: fadeIn 1s ease-in-out;
     }
-
     header h1 {
       margin: 0;
       font-size: 2.5em;
-      color: #00ffcc;
     }
-
-    #accountTag {
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      font-size: 1em;
-      background: #000;
-      color: #00ffcc;
-      border: 1px solid #00ffcc;
-      border-radius: 5px;
-      padding: 5px 10px;
-    }
-
     #adminToggle {
       position: absolute;
-      top: 15px;
-      left: 15px;
+      top: 10px;
+      left: 10px;
       background: #000;
       color: #00ffcc;
       border: 1px solid #00ffcc;
       border-radius: 5px;
       padding: 5px 10px;
+      font-size: 0.9em;
       cursor: pointer;
       transition: background 0.3s ease;
     }
-
     #adminToggle:hover {
       background: #00ccaa;
       color: #000;
     }
-
-    #adminLoginSlide {
+    #accountTag {
       position: absolute;
-      top: 60px;
-      left: 15px;
+      top: 10px;
+      right: 10px;
+      background: #00ffcc;
+      color: #000;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-weight: bold;
+      animation: fadeIn 2s ease-in-out;
+    }
+    #adminBox {
+      position: absolute;
+      top: 50px;
+      left: 10px;
       background: #111;
       border: 1px solid #00ffcc;
       padding: 1em;
-      border-radius: 10px;
       display: none;
-      animation: slideDown 0.5s ease forwards;
+      border-radius: 10px;
+      animation: slideOut 0.5s forwards;
     }
-
     main {
       flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
       padding: 2em;
       text-align: center;
-      animation: fadeInUp 1s ease-in-out;
+      animation: slideIn 1s ease-in-out;
     }
-
     input[type="text"] {
       padding: 0.5em;
       font-size: 1em;
@@ -94,11 +82,11 @@
       background-color: #000;
       color: #00ffcc;
       border-radius: 5px;
-      margin-top: 0.5em;
+      margin: 0.5em 0;
+      width: 100%;
+      max-width: 300px;
     }
-
     button {
-      margin-left: 0.5em;
       padding: 0.5em 1em;
       background-color: #00ffcc;
       border: none;
@@ -108,35 +96,9 @@
       cursor: pointer;
       transition: background-color 0.3s;
     }
-
     button:hover {
       background-color: #00ccaa;
     }
-
-    #registerMessage {
-      color: #00ffcc;
-      margin-top: 1em;
-      font-weight: bold;
-      min-height: 1.5em;
-    }
-
-    #userList {
-      margin-top: 2em;
-      text-align: left;
-      max-width: 400px;
-    }
-
-    #userList li {
-      background-color: #111;
-      padding: 0.5em;
-      border-bottom: 1px solid #00ffcc;
-    }
-
-    #adminPanel {
-      display: none;
-      margin-top: 2em;
-    }
-
     footer {
       width: 100%;
       padding: 1em;
@@ -145,147 +107,104 @@
       color: #777;
       border-top: 1px solid #333;
       background-color: #111;
-      animation: fadeIn 2s ease-in-out;
     }
-
     @keyframes fadeIn {
       from { opacity: 0; } to { opacity: 1; }
     }
-
-    @keyframes fadeInUp {
-      from { transform: translateY(20px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
+    @keyframes slideIn {
+      from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; }
     }
-
-    @keyframes slideDown {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
+    @keyframes slideOut {
+      from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; }
     }
   </style>
 </head>
 <body>
   <header>
     <h1>anti-iboss-union</h1>
-    <div id="adminToggle" onclick="toggleAdminSlide()">Admin?</div>
-    <div id="adminLoginSlide">
-      <input type="text" id="revealCode" placeholder="Enter admin code" />
-      <button onclick="revealAdminPanel()">Verify</button>
-    </div>
-    <div id="accountTag" style="display:none;"></div>
-  </header>
-
-  <main>
-    <h2>Welcome to the Resistance</h2>
-    <p>This is the digital front line. No bosses. No chains. Just code, community, and chaos.</p>
-
-    <div id="register">
-      <input type="text" id="username" placeholder="Enter your GitHub username" />
-      <button id="registerBtn" onclick="registerUser()">Register</button>
-      <div id="registerMessage"></div>
-    </div>
-
-    <div id="adminPanel">
-      <input type="text" id="adminCode" placeholder="Confirm admin code" />
-      <input type="text" id="deleteUser" placeholder="Username to delete" />
+    <div id="adminToggle" onclick="toggleAdminBox()">Admin</div>
+    <div id="accountTag" style="display:none"></div>
+    <div id="adminBox">
+      <input type="text" id="adminCode" placeholder="Enter Admin Code" /><br><br>
+      <input type="text" id="deleteUser" placeholder="Username to delete" /><br><br>
       <button onclick="deleteUser()">Delete User</button>
     </div>
-
-    <div id="userList">
-      <h3>Registered Rebels</h3>
-      <ul id="list"></ul>
-    </div>
-
-    <button onclick="goToSharePage()">Go to Share Page</button>
+  </header>
+  <main>
+    <input type="text" id="username" placeholder="Enter your name" />
+    <button id="registerBtn" onclick="register()">Register</button>
+    <p id="registerMessage"></p>
+    <br>
+    <button onclick="goToSharePage()">Go to Sharing Page</button>
   </main>
-
-  <footer>✊ Powered by the rebellion | anti-iboss-union 2025</footer>
-
+  <footer>
+    ✊ anti-iboss-union 2025
+  </footer>
   <script>
-    const list = document.getElementById('list');
-    const storedUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
     const SECRET_CODE = 'delete4freedom';
+    let storedUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
 
-    function renderList() {
-      list.innerHTML = '';
-      storedUsers.forEach(user => {
-        const li = document.createElement('li');
-        li.textContent = user;
-        list.appendChild(li);
-      });
-    }
-
-    function registerUser() {
+    function register() {
       if (localStorage.getItem('registeredOnce') === 'true') {
-        document.getElementById('registerMessage').textContent = "Already registered. Only admins can reset.";
+        document.getElementById('registerMessage').textContent = '✔️ Already registered';
         return;
       }
-      const username = document.getElementById('username').value.trim();
-      if (username && !storedUsers.includes(username)) {
-        storedUsers.push(username);
-        localStorage.setItem('registeredUsers', JSON.stringify(storedUsers));
-        localStorage.setItem('registeredOnce', 'true');
-        localStorage.setItem('currentUser', username);
-        renderList();
-        document.getElementById('registerBtn').disabled = true;
-        document.getElementById('username').disabled = true;
-        document.getElementById('registerMessage').textContent = "Registration complete.";
-        document.getElementById('accountTag').textContent = username;
-        document.getElementById('accountTag').style.display = 'block';
+      const name = document.getElementById('username').value.trim();
+      if (!name) return;
+
+      storedUsers.push(name);
+      localStorage.setItem('registeredUsers', JSON.stringify(storedUsers));
+      localStorage.setItem('registeredOnce', 'true');
+      localStorage.setItem('currentUser', name);
+      document.getElementById('registerMessage').textContent = `✔️ Registered as ${name}`;
+      document.getElementById('accountTag').textContent = name;
+      document.getElementById('accountTag').style.display = 'block';
+    }
+
+    function goToSharePage() {
+      const allowedUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+      const currentUser = localStorage.getItem('currentUser');
+
+      if (allowedUsers.includes(currentUser)) {
+        window.location.href = 'share.html';
+      } else {
+        alert('🚫 Error 5083: user not registered');
       }
     }
 
     function deleteUser() {
       const code = document.getElementById('adminCode').value.trim();
       const target = document.getElementById('deleteUser').value.trim();
+
       if (code === SECRET_CODE && storedUsers.includes(target)) {
         const index = storedUsers.indexOf(target);
         storedUsers.splice(index, 1);
         localStorage.setItem('registeredUsers', JSON.stringify(storedUsers));
-        renderList();
+
+        if (localStorage.getItem('currentUser') === target) {
+          localStorage.removeItem('registeredOnce');
+          localStorage.removeItem('currentUser');
+          document.getElementById('accountTag').style.display = 'none';
+          document.getElementById('registerBtn').disabled = true;
+          document.getElementById('username').disabled = true;
+          document.getElementById('registerMessage').textContent = "❌ Account deleted. Only admins can re-enable registration.";
+        }
+
         document.getElementById('deleteUser').value = '';
       } else {
-        alert('Invalid code or user not found.');
+        alert('❌ Invalid admin code or user not found.');
       }
     }
 
-    function revealAdminPanel() {
-      const revealInput = document.getElementById('revealCode').value.trim();
-      if (revealInput === SECRET_CODE) {
-        localStorage.removeItem('registeredOnce');
-        document.getElementById('registerBtn').disabled = false;
-        document.getElementById('username').disabled = false;
-        document.getElementById('registerMessage').textContent = "Admin unlocked registration.";
-        document.getElementById('adminPanel').style.display = 'block';
-        document.getElementById('adminLoginSlide').style.display = 'none';
-      } else {
-        alert('Wrong code.');
-      }
-    }
-
-    function toggleAdminSlide() {
-      const panel = document.getElementById('adminLoginSlide');
-      panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
-    }
-
-    function goToSharePage() {
-      const currentUser = localStorage.getItem('currentUser');
-      if (currentUser) {
-        window.location.href = 'share.html';
-      } else {
-        alert("❌ Error 5083: user not registered");
-      }
+    function toggleAdminBox() {
+      const box = document.getElementById('adminBox');
+      box.style.display = box.style.display === 'block' ? 'none' : 'block';
     }
 
     window.onload = () => {
-      renderList();
-      const currentUser = localStorage.getItem('currentUser');
-      if (localStorage.getItem('registeredOnce') === 'true') {
-        document.getElementById('registerBtn').disabled = true;
-        document.getElementById('username').disabled = true;
-        document.getElementById('registerMessage').textContent = "Already registered.";
-      }
-      if (currentUser) {
-        document.getElementById('accountTag').textContent = currentUser;
+      const current = localStorage.getItem('currentUser');
+      if (current) {
+        document.getElementById('accountTag').textContent = current;
         document.getElementById('accountTag').style.display = 'block';
       }
     };
