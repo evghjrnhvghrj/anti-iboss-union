@@ -94,6 +94,36 @@
       margin: 1em 0;
       color: #0f0;
     }
+    #failMsg {
+      color: #f00;
+      font-size: 1.2em;
+      margin: 1em 0;
+    }
+    /* Slide-in notification */
+    #incomingCall {
+      display: none;
+      position: fixed;
+      top: 30%;
+      right: -400px;
+      width: 340px;
+      background: #111;
+      border: 2px solid #00ffcc;
+      border-radius: 10px 0 0 10px;
+      box-shadow: 0 0 30px #000;
+      color: #00ffcc;
+      padding: 1.5em;
+      z-index: 1000;
+      transition: right 0.6s cubic-bezier(.68,-0.55,.27,1.55);
+      animation: fadeIn 1s;
+    }
+    #incomingCall.active {
+      display: block;
+      right: 0;
+    }
+    #incomingCall button {
+      margin: 0.5em;
+      width: 80px;
+    }
     footer {
       width: 100%;
       padding: 1em;
@@ -123,6 +153,7 @@
       <button onclick="startCall()">Confirm</button>
     </div>
     <div id="ringing" style="display:none;">Ringing...</div>
+    <div id="failMsg" style="display:none;">Call failed.</div>
     <div id="callArea">
       <div id="statusMsg">Connected! You can talk now.</div>
       <label id="voiceLabel" for="voiceSlider">Voice Changer (Pitch):</label>
@@ -140,11 +171,18 @@
       <button onclick="endCall()">End Call</button>
       <audio id="remoteAudio" autoplay style="display:none;"></audio>
     </div>
+    <!-- Incoming call notification -->
+    <div id="incomingCall">
+      <div id="incomingMsg"></div>
+      <button onclick="acceptCall()">Yes</button>
+      <button onclick="rejectCall()">No</button>
+    </div>
   </main>
   <footer>
     ✊ anti-iboss-union 2025
   </footer>
   <script>
+    // --- Voice changer code (same as before) ---
     let ringingTimeout;
     let stream;
     let audioContext;
@@ -153,33 +191,121 @@
     let distortion;
     let robotOsc;
     let robotGain;
-    let merger;
     let gainNode;
+    let isCaller = false;
+    let callKey = null;
+    let callTimeout = null;
+    let yourUsername = "";
+    let calleeUsername = "";
 
     function startCall() {
-      const yourName = document.getElementById('yourName').value.trim();
-      const callName = document.getElementById('callName').value.trim();
-      if (!yourName || !callName) {
+      yourUsername = document.getElementById('yourName').value.trim();
+      calleeUsername = document.getElementById('callName').value.trim();
+      if (!yourUsername || !calleeUsername) {
         alert('Please enter both usernames.');
         return;
       }
+      isCaller = true;
+      callKey = "voicecall_" + calleeUsername;
       document.getElementById('setupForm').style.display = 'none';
       document.getElementById('ringing').style.display = 'block';
 
-      // Simulate ringing for up to 30 seconds, then connect or redirect
-      ringingTimeout = setTimeout(() => {
-        window.location.href = 'main.html';
-      }, 30000);
+      // Notify callee via localStorage
+      localStorage.setItem(callKey, JSON.stringify({
+        from: yourUsername,
+        to: calleeUsername,
+        status: "ringing",
+        timestamp: Date.now()
+      }));
 
-      // Simulate connection after 3 seconds for demo
-      setTimeout(() => {
-        clearTimeout(ringingTimeout);
+      // Wait for response (accept/reject) for up to 30s
+      callTimeout = setTimeout(() => {
         document.getElementById('ringing').style.display = 'none';
-        document.getElementById('callArea').style.display = 'block';
-        startVoice();
-      }, 3000);
+        document.getElementById('failMsg').style.display = 'block';
+        // Clean up
+        localStorage.removeItem(callKey);
+      }, 30000);
     }
 
+    // Listen for localStorage events (callee side)
+    window.addEventListener("storage", function(e) {
+      if (!e.key) return;
+      if (e.key.startsWith("voicecall_")) {
+        let data;
+        try { data = JSON.parse(e.newValue); } catch { return; }
+        if (!data) return;
+
+        // If this user is the callee and status is "ringing"
+        if (data.to && data.to === getLocalUsername() && data.status === "ringing") {
+          showIncomingCall(data.from, e.key);
+        }
+        // If this user is the caller and status is "accepted"
+        if (isCaller && callKey && e.key === callKey && data.status === "accepted") {
+          clearTimeout(callTimeout);
+          document.getElementById('ringing').style.display = 'none';
+          document.getElementById('callArea').style.display = 'block';
+          startVoice();
+        }
+        // If this user is the caller and status is "rejected"
+        if (isCaller && callKey && e.key === callKey && data.status === "rejected") {
+          clearTimeout(callTimeout);
+          document.getElementById('ringing').style.display = 'none';
+          document.getElementById('failMsg').style.display = 'block';
+        }
+      }
+    });
+
+    // Helper: get local username from input (for callee)
+    function getLocalUsername() {
+      return document.getElementById('yourName').value.trim();
+    }
+
+    // Callee: show incoming call notification
+    function showIncomingCall(fromUser, key) {
+      const incomingDiv = document.getElementById('incomingCall');
+      document.getElementById('incomingMsg').textContent = `Join ${fromUser}'s call?`;
+      incomingDiv.classList.add('active');
+      // Store key for accept/reject
+      incomingDiv.dataset.callKey = key;
+      incomingDiv.dataset.fromUser = fromUser;
+    }
+
+    // Callee: accept
+    function acceptCall() {
+      const incomingDiv = document.getElementById('incomingCall');
+      const key = incomingDiv.dataset.callKey;
+      const fromUser = incomingDiv.dataset.fromUser;
+      // Notify caller
+      localStorage.setItem(key, JSON.stringify({
+        from: fromUser,
+        to: getLocalUsername(),
+        status: "accepted",
+        timestamp: Date.now()
+      }));
+      incomingDiv.classList.remove('active');
+      document.getElementById('setupForm').style.display = 'none';
+      document.getElementById('callArea').style.display = 'block';
+      startVoice();
+    }
+
+    // Callee: reject
+    function rejectCall() {
+      const incomingDiv = document.getElementById('incomingCall');
+      const key = incomingDiv.dataset.callKey;
+      const fromUser = incomingDiv.dataset.fromUser;
+      // Notify caller
+      localStorage.setItem(key, JSON.stringify({
+        from: fromUser,
+        to: getLocalUsername(),
+        status: "rejected",
+        timestamp: Date.now()
+      }));
+      incomingDiv.classList.remove('active');
+      document.getElementById('failMsg').style.display = 'block';
+      document.getElementById('setupForm').style.display = 'block';
+    }
+
+    // --- Voice changer code (same as previous answer) ---
     function makeDistortionCurve(amount) {
       let k = typeof amount === 'number' ? amount : 50,
           n_samples = 44100,
@@ -201,33 +327,27 @@
           audioContext = new (window.AudioContext || window.webkitAudioContext)();
           source = audioContext.createMediaStreamSource(stream);
 
-          // Pitch shifting (via playbackRate on buffer source, but here use detune)
           pitchNode = audioContext.createBiquadFilter();
           pitchNode.type = "allpass";
 
-          // Distortion
           distortion = audioContext.createWaveShaper();
           distortion.curve = makeDistortionCurve(500);
           distortion.oversample = '4x';
 
-          // Robotization (ring modulation)
           robotOsc = audioContext.createOscillator();
           robotOsc.type = "square";
-          robotOsc.frequency.value = 50; // Hz, can be changed
+          robotOsc.frequency.value = 50;
           robotGain = audioContext.createGain();
           robotGain.gain.value = 0.5;
 
-          // Gain node for volume control
           gainNode = audioContext.createGain();
           gainNode.gain.value = 1;
 
-          // Modulate the input with the oscillator (ring modulator)
           let modulator = audioContext.createGain();
           source.connect(modulator);
           robotOsc.connect(robotGain);
           robotGain.connect(modulator.gain);
 
-          // Connect: modulator -> pitch -> distortion -> gain -> output
           modulator.connect(pitchNode);
           pitchNode.connect(distortion);
           distortion.connect(gainNode);
@@ -239,8 +359,7 @@
           const slider = document.getElementById('voiceSlider');
           const pitchValue = document.getElementById('pitchValue');
           slider.addEventListener('input', function() {
-            // Not true pitch shift, but alters the sound a lot
-            pitchNode.frequency.value = (slider.value - 1) * 1000; // drastic
+            pitchNode.frequency.value = (slider.value - 1) * 1000;
             pitchValue.textContent = slider.value + "x";
           });
           pitchValue.textContent = slider.value + "x";
@@ -288,4 +407,3 @@
   </script>
 </body>
 </html>
-
