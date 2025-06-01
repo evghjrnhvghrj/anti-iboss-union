@@ -328,10 +328,18 @@
     }
 
     // --- Incoming call notification logic ---
-    let yourUsername = "";
+    function getCurrentUsername() {
+      return localStorage.getItem('yourUsername') || '';
+    }
 
     document.getElementById('yourUsernameInput').addEventListener('input', function() {
-      yourUsername = this.value.trim();
+      localStorage.setItem('yourUsername', this.value.trim());
+    });
+
+    // On page load, restore username
+    window.addEventListener('DOMContentLoaded', function() {
+      const saved = localStorage.getItem('yourUsername') || '';
+      document.getElementById('yourUsernameInput').value = saved;
     });
 
     // Listen for localStorage call events
@@ -341,8 +349,9 @@
         let data;
         try { data = JSON.parse(e.newValue); } catch { return; }
         if (!data) return;
-        // If this user is the callee and status is "ringing"
-        if (yourUsername && data.to && data.to === yourUsername && data.status === "ringing") {
+        // Always get the current username from localStorage
+        const username = getCurrentUsername();
+        if (username && data.to && data.to === username && data.status === "ringing") {
           showIncomingCall(data.from, e.key);
         }
       }
@@ -362,16 +371,17 @@
       const incomingDiv = document.getElementById('incomingCall');
       const key = incomingDiv.dataset.callKey;
       const fromUser = incomingDiv.dataset.fromUser;
+      const username = getCurrentUsername();
       // Notify caller
       localStorage.setItem(key, JSON.stringify({
         from: fromUser,
-        to: yourUsername,
+        to: username,
         status: "accepted",
         timestamp: Date.now()
       }));
       incomingDiv.classList.remove('active');
       // Redirect to call.html with both usernames as query params
-      window.location.href = `call.html?your=${encodeURIComponent(yourUsername)}&call=${encodeURIComponent(fromUser)}`;
+      window.location.href = `call.html?your=${encodeURIComponent(username)}&call=${encodeURIComponent(fromUser)}`;
     }
 
     // Reject call: notify caller, show fail message
@@ -379,10 +389,11 @@
       const incomingDiv = document.getElementById('incomingCall');
       const key = incomingDiv.dataset.callKey;
       const fromUser = incomingDiv.dataset.fromUser;
+      const username = getCurrentUsername();
       // Notify caller
       localStorage.setItem(key, JSON.stringify({
         from: fromUser,
-        to: yourUsername,
+        to: username,
         status: "rejected",
         timestamp: Date.now()
       }));
