@@ -129,6 +129,14 @@
       <input type="range" min="0.5" max="2" value="1" step="0.01" id="voiceSlider">
       <span id="pitchValue">1.00x</span>
       <br>
+      <label id="distLabel" for="distSlider">Distortion:</label>
+      <input type="range" min="0" max="1000" value="500" step="1" id="distSlider">
+      <span id="distValue">500</span>
+      <br>
+      <label id="robotLabel" for="robotSlider">Robotization:</label>
+      <input type="range" min="0" max="100" value="50" step="1" id="robotSlider">
+      <span id="robotValue">50</span>
+      <br>
       <button onclick="endCall()">End Call</button>
       <audio id="remoteAudio" autoplay style="display:none;"></audio>
     </div>
@@ -142,6 +150,11 @@
     let audioContext;
     let source;
     let pitchNode;
+    let distortion;
+    let robotOsc;
+    let robotGain;
+    let merger;
+    let gainNode;
 
     function startCall() {
       const yourName = document.getElementById('yourName').value.trim();
@@ -155,7 +168,6 @@
 
       // Simulate ringing for up to 30 seconds, then connect or redirect
       ringingTimeout = setTimeout(() => {
-        // Not connected after 30s, redirect
         window.location.href = 'main.html';
       }, 30000);
 
@@ -165,49 +177,95 @@
         document.getElementById('ringing').style.display = 'none';
         document.getElementById('callArea').style.display = 'block';
         startVoice();
-      }, 3000); // Change this to 30000 for real 30s, 3000 for demo
+      }, 3000);
+    }
+
+    function makeDistortionCurve(amount) {
+      let k = typeof amount === 'number' ? amount : 50,
+          n_samples = 44100,
+          curve = new Float32Array(n_samples),
+          deg = Math.PI / 180,
+          i = 0,
+          x;
+      for ( ; i < n_samples; ++i ) {
+        x = i * 2 / n_samples - 1;
+        curve[i] = ( 3 + k ) * x * 20 * deg / ( Math.PI + k * Math.abs(x) );
+      }
+      return curve;
     }
 
     function startVoice() {
-      // Get user media (mic)
       navigator.mediaDevices.getUserMedia({ audio: true })
         .then(function(s) {
           stream = s;
           audioContext = new (window.AudioContext || window.webkitAudioContext)();
           source = audioContext.createMediaStreamSource(stream);
 
-          // Pitch shifting using playbackRate (simple, not perfect)
-          pitchNode = audioContext.createGain(); // We will use detune for pitch
-          let pitchShifter = audioContext.createBiquadFilter();
-          pitchShifter.type = "allpass"; // Minimal effect, just for demo
+          // Pitch shifting (via playbackRate on buffer source, but here use detune)
+          pitchNode = audioContext.createBiquadFilter();
+          pitchNode.type = "allpass";
 
-          // Connect nodes: source -> pitchShifter -> destination
-          source.connect(pitchShifter);
-          pitchShifter.connect(audioContext.destination);
+          // Distortion
+          distortion = audioContext.createWaveShaper();
+          distortion.curve = makeDistortionCurve(500);
+          distortion.oversample = '4x';
 
-          // Store for slider
-          window.pitchShifter = pitchShifter;
+          // Robotization (ring modulation)
+          robotOsc = audioContext.createOscillator();
+          robotOsc.type = "square";
+          robotOsc.frequency.value = 50; // Hz, can be changed
+          robotGain = audioContext.createGain();
+          robotGain.gain.value = 0.5;
 
-          // Listen to slider
+          // Gain node for volume control
+          gainNode = audioContext.createGain();
+          gainNode.gain.value = 1;
+
+          // Modulate the input with the oscillator (ring modulator)
+          let modulator = audioContext.createGain();
+          source.connect(modulator);
+          robotOsc.connect(robotGain);
+          robotGain.connect(modulator.gain);
+
+          // Connect: modulator -> pitch -> distortion -> gain -> output
+          modulator.connect(pitchNode);
+          pitchNode.connect(distortion);
+          distortion.connect(gainNode);
+          gainNode.connect(audioContext.destination);
+
+          robotOsc.start();
+
+          // Pitch slider
           const slider = document.getElementById('voiceSlider');
           const pitchValue = document.getElementById('pitchValue');
           slider.addEventListener('input', function() {
-            // This is a very basic pitch effect (not real voice changer, for demo only)
-            // Real pitch shifting needs more DSP or libraries
-            audioContext.close().then(() => {
-              audioContext = new (window.AudioContext || window.webkitAudioContext)();
-              source = audioContext.createMediaStreamSource(stream);
-              let newPitch = audioContext.createBiquadFilter();
-              newPitch.type = "allpass";
-              source.connect(newPitch);
-              newPitch.connect(audioContext.destination);
-              window.pitchShifter = newPitch;
-            });
+            // Not true pitch shift, but alters the sound a lot
+            pitchNode.frequency.value = (slider.value - 1) * 1000; // drastic
             pitchValue.textContent = slider.value + "x";
           });
-
-          // Set initial value
           pitchValue.textContent = slider.value + "x";
+          pitchNode.frequency.value = (slider.value - 1) * 1000;
+
+          // Distortion slider
+          const distSlider = document.getElementById('distSlider');
+          const distValue = document.getElementById('distValue');
+          distSlider.addEventListener('input', function() {
+            distortion.curve = makeDistortionCurve(Number(distSlider.value));
+            distValue.textContent = distSlider.value;
+          });
+          distValue.textContent = distSlider.value;
+          distortion.curve = makeDistortionCurve(Number(distSlider.value));
+
+          // Robotization slider
+          const robotSlider = document.getElementById('robotSlider');
+          const robotValue = document.getElementById('robotValue');
+          robotSlider.addEventListener('input', function() {
+            robotOsc.frequency.value = Number(robotSlider.value);
+            robotValue.textContent = robotSlider.value;
+          });
+          robotValue.textContent = robotSlider.value;
+          robotOsc.frequency.value = Number(robotSlider.value);
+
         })
         .catch(function(err) {
           alert('Microphone access denied.');
@@ -221,6 +279,9 @@
       }
       if (audioContext) {
         audioContext.close();
+      }
+      if (robotOsc) {
+        robotOsc.stop();
       }
       window.location.href = 'main.html';
     }
