@@ -145,6 +145,48 @@
       margin-top: 0.5em;
       animation: fadeInUp 0.5s ease-in-out;
     }
+    #yourUsernameBar {
+      width: 100%;
+      background: #111;
+      border-bottom: 1px solid #00ffcc;
+      padding: 0.5em 0;
+      text-align: center;
+    }
+    #yourUsernameBar input {
+      width: 200px;
+      display: inline-block;
+      margin: 0 0.5em;
+    }
+    /* Slide-in notification */
+    #incomingCall {
+      display: none;
+      position: fixed;
+      top: 30%;
+      right: -400px;
+      width: 340px;
+      background: #111;
+      border: 2px solid #00ffcc;
+      border-radius: 10px 0 0 10px;
+      box-shadow: 0 0 30px #000;
+      color: #00ffcc;
+      padding: 1.5em;
+      z-index: 1000;
+      transition: right 0.6s cubic-bezier(.68,-0.55,.27,1.55);
+      animation: fadeIn 1s;
+    }
+    #incomingCall.active {
+      display: block;
+      right: 0;
+    }
+    #incomingCall button {
+      margin: 0.5em;
+      width: 80px;
+    }
+    #failMsg {
+      color: #f00;
+      font-size: 1.2em;
+      margin: 1em 0;
+    }
     footer {
       width: 100%;
       padding: 1em;
@@ -173,6 +215,10 @@
   </style>
 </head>
 <body>
+  <div id="yourUsernameBar">
+    <label for="yourUsernameInput">Your Username:</label>
+    <input type="text" id="yourUsernameInput" placeholder="Type your username..." autocomplete="off" />
+  </div>
   <header>
     <h1>Share Zone</h1>
     <div id="adminTrigger" onclick="toggleAdminSlide()">Admin?</div>
@@ -192,11 +238,19 @@
       <button onclick="deleteComment()">Delete Comment</button>
     </div>
     <div id="posts"></div>
+    <div id="failMsg" style="display:none;">Call failed.</div>
+    <!-- Incoming call notification -->
+    <div id="incomingCall">
+      <div id="incomingMsg"></div>
+      <button onclick="acceptCall()">Yes</button>
+      <button onclick="rejectCall()">No</button>
+    </div>
   </main>
   <footer>
     ✊ anti-iboss-union 2025
   </footer>
   <script>
+    // --- Share page logic (unchanged) ---
     const SECRET_CODE = 'delete4freedom';
     let posts = JSON.parse(localStorage.getItem('sharedPosts')) || [];
 
@@ -272,6 +326,73 @@
     window.onload = () => {
       renderPosts();
     }
+
+    // --- Incoming call notification logic ---
+    let yourUsername = "";
+
+    document.getElementById('yourUsernameInput').addEventListener('input', function() {
+      yourUsername = this.value.trim();
+    });
+
+    // Listen for localStorage call events
+    window.addEventListener("storage", function(e) {
+      if (!e.key) return;
+      if (e.key.startsWith("voicecall_")) {
+        let data;
+        try { data = JSON.parse(e.newValue); } catch { return; }
+        if (!data) return;
+        // If this user is the callee and status is "ringing"
+        if (yourUsername && data.to && data.to === yourUsername && data.status === "ringing") {
+          showIncomingCall(data.from, e.key);
+        }
+      }
+    });
+
+    // Show incoming call notification
+    function showIncomingCall(fromUser, key) {
+      const incomingDiv = document.getElementById('incomingCall');
+      document.getElementById('incomingMsg').textContent = `Join ${fromUser}'s call?`;
+      incomingDiv.classList.add('active');
+      incomingDiv.dataset.callKey = key;
+      incomingDiv.dataset.fromUser = fromUser;
+    }
+
+    // Accept call: open call.html with usernames in URL
+    function acceptCall() {
+      const incomingDiv = document.getElementById('incomingCall');
+      const key = incomingDiv.dataset.callKey;
+      const fromUser = incomingDiv.dataset.fromUser;
+      // Notify caller
+      localStorage.setItem(key, JSON.stringify({
+        from: fromUser,
+        to: yourUsername,
+        status: "accepted",
+        timestamp: Date.now()
+      }));
+      incomingDiv.classList.remove('active');
+      // Redirect to call.html with both usernames as query params
+      window.location.href = `call.html?your=${encodeURIComponent(yourUsername)}&call=${encodeURIComponent(fromUser)}`;
+    }
+
+    // Reject call: notify caller, show fail message
+    function rejectCall() {
+      const incomingDiv = document.getElementById('incomingCall');
+      const key = incomingDiv.dataset.callKey;
+      const fromUser = incomingDiv.dataset.fromUser;
+      // Notify caller
+      localStorage.setItem(key, JSON.stringify({
+        from: fromUser,
+        to: yourUsername,
+        status: "rejected",
+        timestamp: Date.now()
+      }));
+      incomingDiv.classList.remove('active');
+      document.getElementById('failMsg').style.display = 'block';
+      setTimeout(() => {
+        document.getElementById('failMsg').style.display = 'none';
+      }, 3000);
+    }
   </script>
 </body>
 </html>
+
