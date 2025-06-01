@@ -49,9 +49,28 @@
       background: #00ccaa;
       color: #000;
     }
-    #adminSlide {
+    #voiceTalkBtn {
       position: absolute;
       top: 50px;
+      left: 10px;
+      background: #000;
+      color: #00ffcc;
+      border: 1px solid #00ffcc;
+      border-radius: 5px;
+      padding: 7px 16px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background 0.3s, color 0.3s;
+      z-index: 9;
+      margin-top: 10px;
+    }
+    #voiceTalkBtn:hover {
+      background: #00ccaa;
+      color: #000;
+    }
+    #adminSlide {
+      position: absolute;
+      top: 90px;
       left: 10px;
       background: #111;
       border: 1px solid #00ffcc;
@@ -157,6 +176,7 @@
   <header>
     <h1>Share Zone</h1>
     <div id="adminTrigger" onclick="toggleAdminSlide()">Admin?</div>
+    <button id="voiceTalkBtn" onclick="location.href='call.html'">Encrypted Voice Talk</button>
     <div id="adminSlide">
       <input type="text" id="adminCodeInput" placeholder="Enter admin code" />
       <button onclick="verifyAdminCode()">Verify</button>
