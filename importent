@@ -1,0 +1,2031 @@
+this is importent we where browing on " chrome://chrome-urls " 
+and i found " chrome://extensions-internals " and i found code 
+if we find a way to change this code we can eradacate all data
+of iboss from our computers then we can have free websites.
+code:
+
+[ {
+   "background_page_keepalives": {
+      "activites": [  ],
+      "count": -1
+   },
+   "creation_flags": [ "REQUIRE_KEY" ],
+   "disable_reasons": [  ],
+   "event_listeners": {
+      "count": 0,
+      "listeners": [  ]
+   },
+   "guid": "bbc53078-eada-434a-a1a4-25c130cbd757",
+   "id": "ahfgeienlihckogmohjhadlkjgocpleb",
+   "location": "COMPONENT",
+   "manifest_version": 1,
+   "name": "Web Store",
+   "path": "/opt/google/chrome/resources/web_store",
+   "permissions": {
+      "active": {
+         "api": [ "management", "system.display", "system.storage", "webstorePrivate", "system.cpu", "system.memory", "system.network" ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "optional": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "tab_specific": {
+      },
+      "withheld": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      }
+   },
+   "service_worker_keepalives": {
+      "activites": [  ],
+      "count": 0
+   },
+   "type": "TYPE_HOSTED_APP",
+   "version": "0.2"
+}, {
+   "background_page_keepalives": {
+      "activites": [  ],
+      "count": -1
+   },
+   "creation_flags": [ "REQUIRE_KEY", "FROM_WEBSTORE" ],
+   "disable_reasons": [  ],
+   "event_listeners": {
+      "count": 3,
+      "listeners": [ {
+         "event_name": "commands.onCommand",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://bkpenclhmiealbebdopglffmfdiilejc/"
+      }, {
+         "event_name": "runtime.onInstalled",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://bkpenclhmiealbebdopglffmfdiilejc/"
+      }, {
+         "event_name": "runtime.onUpdateAvailable",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://bkpenclhmiealbebdopglffmfdiilejc/"
+      } ]
+   },
+   "guid": "d0f698c9-7e8f-4be4-8368-b3ec6180425b",
+   "id": "bkpenclhmiealbebdopglffmfdiilejc",
+   "location": "INTERNAL",
+   "manifest_version": 3,
+   "name": "Tab Resize - split screen layouts",
+   "path": "/home/chronos/u-fb7a8c73e847cb5c1c04271d36b4d989f1e79bfb/Extensions/bkpenclhmiealbebdopglffmfdiilejc/3.0.1_0",
+   "permissions": {
+      "active": {
+         "api": [ "storage", "system.display", "tabs", "favicon" ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "optional": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "tab_specific": {
+      },
+      "withheld": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      }
+   },
+   "service_worker_keepalives": {
+      "activites": [  ],
+      "count": 0
+   },
+   "type": "TYPE_EXTENSION",
+   "version": "3.0.1"
+}, {
+   "background_page_keepalives": {
+      "activites": [  ],
+      "count": -1
+   },
+   "creation_flags": [ "REQUIRE_KEY" ],
+   "disable_reasons": [  ],
+   "event_listeners": {
+      "count": 4,
+      "listeners": [ {
+         "event_name": "runtime.onConnectExternal",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://bpmcpldpdmajfigpchkicefoigmkfalc/"
+      }, {
+         "event_name": "runtime.onConnectExternal",
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://bpmcpldpdmajfigpchkicefoigmkfalc/"
+      }, {
+         "event_name": "tabs.onRemoved",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://bpmcpldpdmajfigpchkicefoigmkfalc/"
+      }, {
+         "event_name": "tabs.onRemoved",
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://bpmcpldpdmajfigpchkicefoigmkfalc/"
+      } ]
+   },
+   "guid": "b9feebaa-f61e-49bc-82ae-212fe9d872be",
+   "id": "bpmcpldpdmajfigpchkicefoigmkfalc",
+   "location": "COMPONENT",
+   "manifest_version": 3,
+   "name": "Basic Editor for Office files",
+   "path": "/usr/share/chromeos-assets/quickoffice",
+   "permissions": {
+      "active": {
+         "api": [ "clipboardRead", "clipboardWrite", "cookies", "downloads", "fileSystem", "fileSystem.write", "identity", "identity.email", "metricsPrivate", "storage", "unlimitedStorage" ],
+         "explicit_hosts": [ "*://*.google.com/*", "https://www.google-analytics.com/*", "https://www.googleapis.com/*" ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "optional": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "tab_specific": {
+      },
+      "withheld": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      }
+   },
+   "service_worker_keepalives": {
+      "activites": [  ],
+      "count": 0
+   },
+   "type": "TYPE_EXTENSION",
+   "version": "152.160.162"
+}, {
+   "background_page_keepalives": {
+      "activites": [  ],
+      "count": 0
+   },
+   "creation_flags": [ "REQUIRE_KEY" ],
+   "disable_reasons": [  ],
+   "event_listeners": {
+      "count": 1,
+      "listeners": [ {
+         "event_name": "app.runtime.onLaunched",
+         "is_for_service_worker": false,
+         "is_lazy": true,
+         "url": ""
+      } ]
+   },
+   "guid": "4060f3f9-9e2f-4fec-8f7b-3f4133b9c635",
+   "id": "cnbgggchhmkkdmeppjobngjoejnihlei",
+   "location": "COMPONENT",
+   "manifest_version": 2,
+   "name": "Play Store",
+   "path": "/opt/google/chrome/resources/chromeos/arc_support",
+   "permissions": {
+      "active": {
+         "api": [ "browser", "nativeMessaging", "webview" ],
+         "explicit_hosts": [ "chrome://resources/*" ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "optional": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "tab_specific": {
+      },
+      "withheld": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      }
+   },
+   "service_worker_keepalives": {
+      "activites": [  ],
+      "count": 0
+   },
+   "type": "TYPE_PLATFORM_APP",
+   "version": "0.2.0.0"
+}, {
+   "background_page_keepalives": {
+      "activites": [  ],
+      "count": 0
+   },
+   "creation_flags": [ "REQUIRE_KEY" ],
+   "disable_reasons": [  ],
+   "event_listeners": {
+      "count": 4,
+      "listeners": [ {
+         "event_name": "ttsEngine.onPause",
+         "is_for_service_worker": false,
+         "is_lazy": true,
+         "url": ""
+      }, {
+         "event_name": "ttsEngine.onResume",
+         "is_for_service_worker": false,
+         "is_lazy": true,
+         "url": ""
+      }, {
+         "event_name": "ttsEngine.onSpeakWithAudioStream",
+         "is_for_service_worker": false,
+         "is_lazy": true,
+         "url": ""
+      }, {
+         "event_name": "ttsEngine.onStop",
+         "is_for_service_worker": false,
+         "is_lazy": true,
+         "url": ""
+      } ]
+   },
+   "guid": "1b80d9b7-95b5-4b00-a638-d59708ec8235",
+   "id": "dakbfdmgjiabojdgbiljlhgjbokobjpg",
+   "location": "COMPONENT",
+   "manifest_version": 2,
+   "name": "eSpeakNG text-to-speech extension",
+   "path": "/usr/share/chromeos-assets/speech_synthesis/espeak-ng",
+   "permissions": {
+      "active": {
+         "api": [ "storage", "ttsEngine" ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "optional": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "tab_specific": {
+      },
+      "withheld": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      }
+   },
+   "service_worker_keepalives": {
+      "activites": [  ],
+      "count": 0
+   },
+   "type": "TYPE_EXTENSION",
+   "version": "1.49.3.0"
+}, {
+   "background_page_keepalives": {
+      "activites": [  ],
+      "count": 0
+   },
+   "creation_flags": [ "REQUIRE_KEY", "FROM_WEBSTORE" ],
+   "disable_reasons": [  ],
+   "event_listeners": {
+      "count": 1,
+      "listeners": [ {
+         "event_name": "app.runtime.onLaunched",
+         "is_for_service_worker": false,
+         "is_lazy": true,
+         "url": ""
+      } ]
+   },
+   "guid": "047ef309-8bf9-4d1d-8137-c4784265f19f",
+   "id": "depknbhchbkgginkpgelplfghmjemdlg",
+   "location": "INTERNAL",
+   "manifest_version": 2,
+   "name": "Linkbot IDE",
+   "path": "/home/chronos/u-fb7a8c73e847cb5c1c04271d36b4d989f1e79bfb/Extensions/depknbhchbkgginkpgelplfghmjemdlg/2.1.7_0",
+   "permissions": {
+      "active": {
+         "api": [ "fileSystem", "fileSystem.directory", "fileSystem.write", "serial", "storage", "webview" ],
+         "explicit_hosts": [  ],
+         "manifest": [ {
+            "sockets": {
+               "tcp": {
+                  "connect": [ "*:*" ]
+               },
+               "tcpServer": {
+                  "listen": [ "*:*" ]
+               }
+            }
+         } ],
+         "scriptable_hosts": [  ]
+      },
+      "optional": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "tab_specific": {
+      },
+      "withheld": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      }
+   },
+   "service_worker_keepalives": {
+      "activites": [  ],
+      "count": 0
+   },
+   "type": "TYPE_PLATFORM_APP",
+   "version": "2.1.7"
+}, {
+   "background_page_keepalives": {
+      "activites": [  ],
+      "count": -1
+   },
+   "creation_flags": [ "REQUIRE_KEY", "FROM_WEBSTORE" ],
+   "disable_reasons": [  ],
+   "event_listeners": {
+      "count": 0,
+      "listeners": [  ]
+   },
+   "guid": "a3d97049-f50f-45e3-87de-023d0f49c2a5",
+   "id": "efcfpkgfjedekkkejibenkmfhkljgfga",
+   "location": "EXTERNAL_POLICY_DOWNLOAD",
+   "manifest_version": 2,
+   "name": "Clever for PYLUSD",
+   "path": "/home/chronos/u-fb7a8c73e847cb5c1c04271d36b4d989f1e79bfb/Extensions/efcfpkgfjedekkkejibenkmfhkljgfga/0.0.0.1_0",
+   "permissions": {
+      "active": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "optional": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "tab_specific": {
+      },
+      "withheld": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      }
+   },
+   "service_worker_keepalives": {
+      "activites": [  ],
+      "count": 0
+   },
+   "type": "TYPE_HOSTED_APP",
+   "version": "0.0.0.1"
+}, {
+   "background_page_keepalives": {
+      "activites": [  ],
+      "count": -1
+   },
+   "creation_flags": [ "REQUIRE_KEY", "FROM_WEBSTORE", "WAS_INSTALLED_BY_DEFAULT" ],
+   "disable_reasons": [  ],
+   "event_listeners": {
+      "count": 2,
+      "listeners": [ {
+         "event_name": "alarms.onAlarm",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://ghbmnnjooekpmoecnnnilnnbdlolhkhi/"
+      }, {
+         "event_name": "runtime.onConnectExternal",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://ghbmnnjooekpmoecnnnilnnbdlolhkhi/"
+      } ]
+   },
+   "guid": "96cca81e-db75-4636-a3f4-a8efe268a415",
+   "id": "ghbmnnjooekpmoecnnnilnnbdlolhkhi",
+   "location": "EXTERNAL_PREF_DOWNLOAD",
+   "manifest_version": 3,
+   "name": "Google Docs Offline",
+   "path": "/home/chronos/u-fb7a8c73e847cb5c1c04271d36b4d989f1e79bfb/Extensions/ghbmnnjooekpmoecnnnilnnbdlolhkhi/1.92.1_0",
+   "permissions": {
+      "active": {
+         "api": [ "alarms", "storage", "unlimitedStorage", "offscreen" ],
+         "explicit_hosts": [ "https://docs.google.com/*", "https://drive.google.com/*" ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "optional": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "tab_specific": {
+      },
+      "withheld": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      }
+   },
+   "service_worker_keepalives": {
+      "activites": [  ],
+      "count": 0
+   },
+   "type": "TYPE_EXTENSION",
+   "version": "1.92.1"
+}, {
+   "background_page_keepalives": {
+      "activites": [  ],
+      "count": -1
+   },
+   "creation_flags": [ "REQUIRE_KEY", "FROM_WEBSTORE" ],
+   "disable_reasons": [  ],
+   "event_listeners": {
+      "count": 69,
+      "listeners": [ {
+         "event_name": "action.onClicked",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "action.onClicked",
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "alarms.onAlarm",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "alarms.onAlarm",
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "commands.onCommand",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "commands.onCommand",
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "contextMenus.onClicked",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "contextMenus.onClicked",
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "runtime.onInstalled",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "runtime.onInstalled",
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "runtime.onStartup",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "runtime.onStartup",
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "storage.onChanged",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "storage.onChanged",
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "tabs.onActivated",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "tabs.onActivated",
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "tabs.onCreated",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "tabs.onCreated",
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "tabs.onRemoved",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "tabs.onRemoved",
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "tabs.onReplaced",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "tabs.onReplaced",
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "tabs.onUpdated",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "tabs.onUpdated",
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "webNavigation.onBeforeNavigate",
+         "filter": {
+         },
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "webNavigation.onBeforeNavigate",
+         "filter": {
+         },
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "webNavigation.onCommitted",
+         "filter": {
+         },
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "webNavigation.onCommitted",
+         "filter": {
+            "url": [ {
+               "hostSuffix": "getadblock.com"
+            }, {
+               "hostSuffix": "getadblockpremium.com"
+            } ]
+         },
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "webNavigation.onCommitted",
+         "filter": {
+            "url": [ {
+               "urlMatches": "https://ext-bridge.eyeo.com"
+            } ]
+         },
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "webNavigation.onCommitted",
+         "filter": {
+            "url": [ {
+               "originAndPathMatches": "https://btloader.com/trustedIframe.html"
+            } ]
+         },
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "webNavigation.onCommitted",
+         "filter": {
+         },
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "webNavigation.onCommitted",
+         "filter": {
+            "url": [ {
+               "hostSuffix": "getadblock.com"
+            }, {
+               "hostSuffix": "getadblockpremium.com"
+            } ]
+         },
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "webNavigation.onCommitted",
+         "filter": {
+            "url": [ {
+               "originAndPathMatches": "https://btloader.com/trustedIframe.html"
+            } ]
+         },
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "webNavigation.onCompleted",
+         "filter": {
+         },
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "webNavigation.onCompleted",
+         "filter": {
+            "url": [ {
+               "hostEquals": "www.youtube.com"
+            } ]
+         },
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "webNavigation.onCompleted",
+         "filter": {
+            "url": [ {
+               "hostEquals": "www.youtube.com"
+            }, {
+               "hostEquals": "youtube.com"
+            }, {
+               "hostEquals": "www.facebook.com"
+            }, {
+               "hostEquals": "facebook.com"
+            } ]
+         },
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "webNavigation.onCompleted",
+         "filter": {
+         },
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "webNavigation.onCompleted",
+         "filter": {
+            "url": [ {
+               "hostEquals": "www.youtube.com"
+            } ]
+         },
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "webNavigation.onCompleted",
+         "filter": {
+            "url": [ {
+               "hostEquals": "www.youtube.com"
+            }, {
+               "hostEquals": "youtube.com"
+            }, {
+               "hostEquals": "www.facebook.com"
+            }, {
+               "hostEquals": "facebook.com"
+            } ]
+         },
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "webNavigation.onCreatedNavigationTarget",
+         "filter": {
+         },
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "webNavigation.onCreatedNavigationTarget",
+         "filter": {
+         },
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "webNavigation.onErrorOccurred",
+         "filter": {
+         },
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "webNavigation.onErrorOccurred",
+         "filter": {
+         },
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "webNavigation.onHistoryStateUpdated",
+         "filter": {
+            "url": [ {
+               "hostEquals": "www.youtube.com"
+            } ]
+         },
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "webNavigation.onHistoryStateUpdated",
+         "filter": {
+         },
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "webNavigation.onHistoryStateUpdated",
+         "filter": {
+            "url": [ {
+               "hostEquals": "www.youtube.com"
+            } ]
+         },
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "webNavigation.onHistoryStateUpdated",
+         "filter": {
+         },
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "webRequest.onBeforeRedirect/s4",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "webRequest.onBeforeRedirect/s4",
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "webRequest.onBeforeRequest/s2",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "webRequest.onBeforeRequest/s2",
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "webRequest.onBeforeRequest/s3",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "webRequest.onBeforeRequest/s3",
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "webRequest.onBeforeRequest/s8",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "webRequest.onBeforeRequest/s8",
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "webRequest.onCompleted/s6",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "webRequest.onCompleted/s6",
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "webRequest.onCompleted/s9",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "webRequest.onCompleted/s9",
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "webRequest.onErrorOccurred/s10",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "webRequest.onErrorOccurred/s10",
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "webRequest.onErrorOccurred/s5",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "webRequest.onErrorOccurred/s5",
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "webRequest.onHeadersReceived/s1",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "webRequest.onHeadersReceived/s1",
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "webRequest.onHeadersReceived/s7",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "webRequest.onHeadersReceived/s7",
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "windows.onRemoved",
+         "filter": {
+         },
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      }, {
+         "event_name": "windows.onRemoved",
+         "filter": {
+         },
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://gighmmpiobklfepjocnamgkkbiglidom/"
+      } ]
+   },
+   "guid": "965119ee-d4b9-4759-868e-a1444f8858a6",
+   "id": "gighmmpiobklfepjocnamgkkbiglidom",
+   "location": "INTERNAL",
+   "manifest_version": 3,
+   "name": "AdBlock â€” block ads across the web",
+   "path": "/home/chronos/u-fb7a8c73e847cb5c1c04271d36b4d989f1e79bfb/Extensions/gighmmpiobklfepjocnamgkkbiglidom/6.21.1_0",
+   "permissions": {
+      "active": {
+         "api": [ "alarms", "contextMenus", "devtools", "idle", "notifications", "storage", "tabs", "unlimitedStorage", "webNavigation", "webRequest", "scripting", "declarativeNetRequestWithHostAccess" ],
+         "explicit_hosts": [ "\u003Call_urls>" ],
+         "manifest": [  ],
+         "scriptable_hosts": [ "*://*.facebook.com/*", "*://*.getadblock.com/*", "*://*.getadblockpremium.com/*", "*://*.twitch.tv/*", "*://*.youtube-nocookie.com/embed/*", "*://*.youtube.com/*", "http://*/*", "https://*/*", "https://accounts.adblockplus.org/*", "https://adblockplus.org/*", "https://btloader.com/trustedIframe.html?o=*", "https://ext-bridge.eyeo.com/", "https://getadblock.com/*", "https://new.adblockplus.org/*", "https://vpn.getadblock.com/*", "https://welcome.adblockplus.org/*" ]
+      },
+      "optional": {
+         "api": [ "management" ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "tab_specific": {
+      },
+      "withheld": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      }
+   },
+   "service_worker_keepalives": {
+      "activites": [  ],
+      "count": 0
+   },
+   "type": "TYPE_EXTENSION",
+   "version": "6.21.1"
+}, {
+   "background_page_keepalives": {
+      "activites": [  ],
+      "count": 0
+   },
+   "creation_flags": [ "REQUIRE_KEY" ],
+   "disable_reasons": [  ],
+   "event_listeners": {
+      "count": 4,
+      "listeners": [ {
+         "event_name": "ttsEngine.onPause",
+         "is_for_service_worker": false,
+         "is_lazy": true,
+         "url": ""
+      }, {
+         "event_name": "ttsEngine.onResume",
+         "is_for_service_worker": false,
+         "is_lazy": true,
+         "url": ""
+      }, {
+         "event_name": "ttsEngine.onSpeak",
+         "is_for_service_worker": false,
+         "is_lazy": true,
+         "url": ""
+      }, {
+         "event_name": "ttsEngine.onStop",
+         "is_for_service_worker": false,
+         "is_lazy": true,
+         "url": ""
+      } ]
+   },
+   "guid": "c0ec137a-37ee-4d39-bdae-d3a76bc1990d",
+   "id": "gjjabgpgjpampikjhjpfhneeoapjbjaf",
+   "location": "COMPONENT",
+   "manifest_version": 2,
+   "name": "Chrome OS built-in text-to-speech extension",
+   "path": "/usr/share/chromeos-assets/speech_synthesis/patts",
+   "permissions": {
+      "active": {
+         "api": [ "accessibilityPrivate", "metricsPrivate", "tts", "ttsEngine", "unlimitedStorage" ],
+         "explicit_hosts": [ "https://*.gvt1.com/*", "https://dl.google.com/*" ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "optional": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "tab_specific": {
+      },
+      "withheld": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      }
+   },
+   "service_worker_keepalives": {
+      "activites": [  ],
+      "count": 0
+   },
+   "type": "TYPE_EXTENSION",
+   "version": "29.6"
+}, {
+   "background_page_keepalives": {
+      "activites": [  ],
+      "count": -1
+   },
+   "creation_flags": [ "REQUIRE_KEY", "FROM_WEBSTORE", "WAS_INSTALLED_BY_DEFAULT" ],
+   "disable_reasons": [  ],
+   "event_listeners": {
+      "count": 8,
+      "listeners": [ {
+         "event_name": "runtime.onStartup",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://gndmhdcefbhlchkhipcnnbkcmicncehk/"
+      }, {
+         "event_name": "runtime.onStartup",
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://gndmhdcefbhlchkhipcnnbkcmicncehk/"
+      }, {
+         "event_name": "tabs.onRemoved",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://gndmhdcefbhlchkhipcnnbkcmicncehk/"
+      }, {
+         "event_name": "tabs.onRemoved",
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://gndmhdcefbhlchkhipcnnbkcmicncehk/"
+      }, {
+         "event_name": "windows.onBoundsChanged",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://gndmhdcefbhlchkhipcnnbkcmicncehk/"
+      }, {
+         "event_name": "windows.onBoundsChanged",
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://gndmhdcefbhlchkhipcnnbkcmicncehk/"
+      }, {
+         "event_name": "windows.onFocusChanged",
+         "filter": {
+         },
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://gndmhdcefbhlchkhipcnnbkcmicncehk/"
+      }, {
+         "event_name": "windows.onFocusChanged",
+         "filter": {
+         },
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://gndmhdcefbhlchkhipcnnbkcmicncehk/"
+      } ]
+   },
+   "guid": "a431acc8-51ef-4524-8dc7-917de4181ffd",
+   "id": "gndmhdcefbhlchkhipcnnbkcmicncehk",
+   "location": "EXTERNAL_COMPONENT",
+   "manifest_version": 3,
+   "name": "Assessment Assistant",
+   "path": "/home/chronos/u-fb7a8c73e847cb5c1c04271d36b4d989f1e79bfb/Extensions/gndmhdcefbhlchkhipcnnbkcmicncehk/25.113.1_0",
+   "permissions": {
+      "active": {
+         "api": [ "devtools", "enterprise.platformKeys", "management", "storage", "tabs", "webNavigation", "lockWindowFullscreenPrivate" ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [ "http://*/*", "https://*/*" ]
+      },
+      "optional": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "tab_specific": {
+      },
+      "withheld": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      }
+   },
+   "service_worker_keepalives": {
+      "activites": [  ],
+      "count": 0
+   },
+   "type": "TYPE_EXTENSION",
+   "version": "25.113.1"
+}, {
+   "background_page_keepalives": {
+      "activites": [  ],
+      "count": 0
+   },
+   "creation_flags": [ "REQUIRE_KEY", "FROM_WEBSTORE" ],
+   "disable_reasons": [  ],
+   "event_listeners": {
+      "count": 1,
+      "listeners": [ {
+         "event_name": "app.runtime.onLaunched",
+         "is_for_service_worker": false,
+         "is_lazy": true,
+         "url": ""
+      } ]
+   },
+   "guid": "c6510a6b-a7bc-42ce-8d7e-af6b22eb4996",
+   "id": "hmbjbjdpkobdjplfobhljndfdfdipjhg",
+   "location": "EXTERNAL_POLICY_DOWNLOAD",
+   "manifest_version": 2,
+   "name": "Zoom",
+   "path": "/home/chronos/u-fb7a8c73e847cb5c1c04271d36b4d989f1e79bfb/Extensions/hmbjbjdpkobdjplfobhljndfdfdipjhg/5.0.4301.407_0",
+   "permissions": {
+      "active": {
+         "api": [ "app.window.alwaysOnTop", "audioCapture", "desktopCapture", "fileSystem", "fileSystem.directory", "fileSystem.write", "idle", "power", {
+            "socket": [ "tcp-connect:*:*", "udp-bind:*:*", "udp-send-to:*:*", "resolve-host", "resolve-proxy" ]
+         }, "storage", "system.display", "unlimitedStorage", "videoCapture", "webview", "system.cpu", "system.memory" ],
+         "explicit_hosts": [ "*://*.zoom.com/*", "*://*.zoom.us/*", "*://*.zoomdev.us/*", "*://*.zoomgov.com/*" ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "optional": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "tab_specific": {
+      },
+      "withheld": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      }
+   },
+   "service_worker_keepalives": {
+      "activites": [  ],
+      "count": 0
+   },
+   "type": "TYPE_PLATFORM_APP",
+   "version": "5.0.1 (4301.0407)"
+}, {
+   "background_page_keepalives": {
+      "activites": [  ],
+      "count": -1
+   },
+   "creation_flags": [ "REQUIRE_KEY" ],
+   "disable_reasons": [  ],
+   "event_listeners": {
+      "count": 0,
+      "listeners": [  ]
+   },
+   "guid": "636b0664-322a-480f-a9d0-8d36f697a0e3",
+   "id": "honijodknafkokifofgiaalefdiedpko",
+   "location": "COMPONENT",
+   "manifest_version": 2,
+   "name": "Help",
+   "path": "/usr/share/chromeos-assets/helpapp",
+   "permissions": {
+      "active": {
+         "api": [ "storage" ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "optional": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "tab_specific": {
+      },
+      "withheld": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      }
+   },
+   "service_worker_keepalives": {
+      "activites": [  ],
+      "count": 0
+   },
+   "type": "TYPE_EXTENSION",
+   "version": "4.0"
+}, {
+   "background_page_keepalives": {
+      "activites": [  ],
+      "count": -1
+   },
+   "creation_flags": [ "REQUIRE_KEY", "FROM_WEBSTORE" ],
+   "disable_reasons": [  ],
+   "event_listeners": {
+      "count": 2,
+      "listeners": [ {
+         "event_name": "action.onClicked",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://ipdjnhgkpapgippgcgkfcbpdpcgifncb/"
+      }, {
+         "event_name": "runtime.onInstalled",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://ipdjnhgkpapgippgcgkfcbpdpcgifncb/"
+      } ]
+   },
+   "guid": "da5592e5-299a-4a3e-bb1f-042cf446381e",
+   "id": "ipdjnhgkpapgippgcgkfcbpdpcgifncb",
+   "location": "INTERNAL",
+   "manifest_version": 3,
+   "name": "Emoji Keyboard by JoyPixelsÂ®",
+   "path": "/home/chronos/u-fb7a8c73e847cb5c1c04271d36b4d989f1e79bfb/Extensions/ipdjnhgkpapgippgcgkfcbpdpcgifncb/9.1.2_0",
+   "permissions": {
+      "active": {
+         "api": [ "activeTab", "clipboardWrite", "storage" ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [ "http://*/*", "https://*/*", "https://www.google-analytics.com/*" ]
+      },
+      "optional": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "tab_specific": {
+      },
+      "withheld": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      }
+   },
+   "service_worker_keepalives": {
+      "activites": [  ],
+      "count": 0
+   },
+   "type": "TYPE_EXTENSION",
+   "version": "9.1.2"
+}, {
+   "background_page_keepalives": {
+      "activites": [  ],
+      "count": -1
+   },
+   "creation_flags": [ "REQUIRE_KEY", "FROM_WEBSTORE" ],
+   "disable_reasons": [  ],
+   "event_listeners": {
+      "count": 8,
+      "listeners": [ {
+         "event_name": "action.onClicked",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://jfiihjeimjpkpoaekpdpllpaeichkiod/"
+      }, {
+         "event_name": "action.onClicked",
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://jfiihjeimjpkpoaekpdpllpaeichkiod/"
+      }, {
+         "event_name": "runtime.onInstalled",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://jfiihjeimjpkpoaekpdpllpaeichkiod/"
+      }, {
+         "event_name": "runtime.onInstalled",
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://jfiihjeimjpkpoaekpdpllpaeichkiod/"
+      }, {
+         "event_name": "tabs.onRemoved",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://jfiihjeimjpkpoaekpdpllpaeichkiod/"
+      }, {
+         "event_name": "tabs.onRemoved",
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://jfiihjeimjpkpoaekpdpllpaeichkiod/"
+      }, {
+         "event_name": "tabs.onUpdated",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://jfiihjeimjpkpoaekpdpllpaeichkiod/"
+      }, {
+         "event_name": "tabs.onUpdated",
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://jfiihjeimjpkpoaekpdpllpaeichkiod/"
+      } ]
+   },
+   "guid": "fb1cbb2d-6643-4350-af22-1694c1d13120",
+   "id": "jfiihjeimjpkpoaekpdpllpaeichkiod",
+   "location": "INTERNAL",
+   "manifest_version": 3,
+   "name": "Page Marker - Draw on Web",
+   "path": "/home/chronos/u-fb7a8c73e847cb5c1c04271d36b4d989f1e79bfb/Extensions/jfiihjeimjpkpoaekpdpllpaeichkiod/5.7_0",
+   "permissions": {
+      "active": {
+         "api": [ "activeTab", "storage", "scripting" ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "optional": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "tab_specific": {
+      },
+      "withheld": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      }
+   },
+   "service_worker_keepalives": {
+      "activites": [  ],
+      "count": 0
+   },
+   "type": "TYPE_EXTENSION",
+   "version": "5.7"
+}, {
+   "background_page_keepalives": {
+      "activites": [  ],
+      "count": -1
+   },
+   "creation_flags": [ "REQUIRE_KEY", "FROM_WEBSTORE" ],
+   "disable_reasons": [  ],
+   "event_listeners": {
+      "count": 4,
+      "listeners": [ {
+         "event_name": "runtime.onInstalled",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://jghecgabfgfdldnmbfkhmffcabddioke/"
+      }, {
+         "event_name": "runtime.onInstalled",
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://jghecgabfgfdldnmbfkhmffcabddioke/"
+      }, {
+         "event_name": "tabs.onRemoved",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://jghecgabfgfdldnmbfkhmffcabddioke/"
+      }, {
+         "event_name": "tabs.onRemoved",
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://jghecgabfgfdldnmbfkhmffcabddioke/"
+      } ]
+   },
+   "guid": "643b855e-d493-4788-914e-bd9aab75b3be",
+   "id": "jghecgabfgfdldnmbfkhmffcabddioke",
+   "location": "INTERNAL",
+   "manifest_version": 3,
+   "name": "Volume Master",
+   "path": "/home/chronos/u-fb7a8c73e847cb5c1c04271d36b4d989f1e79bfb/Extensions/jghecgabfgfdldnmbfkhmffcabddioke/2.4.0_0",
+   "permissions": {
+      "active": {
+         "api": [ "activeTab", "storage", "tabs", "tabCapture", "offscreen" ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "optional": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "tab_specific": {
+      },
+      "withheld": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      }
+   },
+   "service_worker_keepalives": {
+      "activites": [  ],
+      "count": 0
+   },
+   "type": "TYPE_EXTENSION",
+   "version": "2.4.0"
+}, {
+   "background_page_keepalives": {
+      "activites": [  ],
+      "count": 0
+   },
+   "creation_flags": [ "REQUIRE_KEY" ],
+   "disable_reasons": [  ],
+   "event_listeners": {
+      "count": 18,
+      "listeners": [ {
+         "event_name": "input.ime.onActivate",
+         "is_for_service_worker": false,
+         "is_lazy": true,
+         "url": ""
+      }, {
+         "event_name": "input.ime.onBlur",
+         "is_for_service_worker": false,
+         "is_lazy": true,
+         "url": ""
+      }, {
+         "event_name": "input.ime.onCandidateClicked",
+         "is_for_service_worker": false,
+         "is_lazy": true,
+         "url": ""
+      }, {
+         "event_name": "input.ime.onDeactivated",
+         "is_for_service_worker": false,
+         "is_lazy": true,
+         "url": ""
+      }, {
+         "event_name": "input.ime.onKeyEvent",
+         "is_for_service_worker": false,
+         "is_lazy": true,
+         "url": ""
+      }, {
+         "event_name": "input.ime.onMenuItemActivated",
+         "is_for_service_worker": false,
+         "is_lazy": true,
+         "url": ""
+      }, {
+         "event_name": "input.ime.onReset",
+         "is_for_service_worker": false,
+         "is_lazy": true,
+         "url": ""
+      }, {
+         "event_name": "input.ime.onSurroundingTextChanged",
+         "is_for_service_worker": false,
+         "is_lazy": true,
+         "url": ""
+      }, {
+         "event_name": "inputMethodPrivate.onDictionaryChanged",
+         "is_for_service_worker": false,
+         "is_lazy": true,
+         "url": ""
+      }, {
+         "event_name": "inputMethodPrivate.onFocus",
+         "is_for_service_worker": false,
+         "is_lazy": true,
+         "url": ""
+      }, {
+         "event_name": "inputMethodPrivate.onInputMethodOptionsChanged",
+         "is_for_service_worker": false,
+         "is_lazy": true,
+         "url": ""
+      }, {
+         "event_name": "inputMethodPrivate.onScreenProjectionChanged",
+         "is_for_service_worker": false,
+         "is_lazy": true,
+         "url": ""
+      }, {
+         "event_name": "inputMethodPrivate.onSuggestionsChanged",
+         "is_for_service_worker": false,
+         "is_lazy": true,
+         "url": ""
+      }, {
+         "event_name": "system.display.onDisplayChanged",
+         "is_for_service_worker": false,
+         "is_lazy": true,
+         "url": ""
+      }, {
+         "event_name": "types.ChromeSetting.spokenFeedback.onChange",
+         "is_for_service_worker": false,
+         "is_lazy": true,
+         "url": ""
+      }, {
+         "event_name": "virtualKeyboardPrivate.onClipboardHistoryChanged",
+         "is_for_service_worker": false,
+         "is_lazy": true,
+         "url": ""
+      }, {
+         "event_name": "virtualKeyboardPrivate.onKeyboardClosed",
+         "is_for_service_worker": false,
+         "is_lazy": true,
+         "url": ""
+      }, {
+         "event_name": "virtualKeyboardPrivate.onKeyboardConfigChanged",
+         "is_for_service_worker": false,
+         "is_lazy": true,
+         "url": ""
+      } ]
+   },
+   "guid": "5c6ce479-5e7c-4729-b754-a7d93b83c883",
+   "id": "jkghodnilhceideoidjikpgommlajknk",
+   "location": "COMPONENT",
+   "manifest_version": 2,
+   "name": "Chrome OS XKB",
+   "path": "/usr/share/chromeos-assets/input_methods/input_tools",
+   "permissions": {
+      "active": {
+         "api": [ "accessibilityFeatures.read", "app.window.alpha", "audioCapture", "app.window.ime", "input", "inputMethodPrivate", "metricsPrivate", "notifications", "system.display", "tabs", "tts", "unlimitedStorage", "virtualKeyboardPrivate" ],
+         "explicit_hosts": [ "https://clients4.google.com/*", "https://dl.google.com/*", "https://edgedl.me.gvt1.com/*", "https://handwriting.googleapis.com/*", "https://www.googleapis.com/*" ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "optional": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "tab_specific": {
+      },
+      "withheld": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      }
+   },
+   "service_worker_keepalives": {
+      "activites": [  ],
+      "count": 0
+   },
+   "type": "TYPE_EXTENSION",
+   "version": "1.0.5.0"
+}, {
+   "background_page_keepalives": {
+      "activites": [  ],
+      "count": 0
+   },
+   "creation_flags": [ "REQUIRE_KEY" ],
+   "disable_reasons": [  ],
+   "event_listeners": {
+      "count": 0,
+      "listeners": [  ]
+   },
+   "guid": "e1afef11-5888-4707-aa3f-ee8e2e049ed3",
+   "id": "kddnkjkcjddckihglkfcickdhbmaodcn",
+   "location": "COMPONENT",
+   "manifest_version": 2,
+   "name": "Chrome Goodies",
+   "path": "/usr/share/chromeos-assets/echo",
+   "permissions": {
+      "active": {
+         "api": [ "alarms", "chromeosInfoPrivate", "cookies", "echoPrivate", "metricsPrivate", "notifications", "storage" ],
+         "explicit_hosts": [ "https://*/*" ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "optional": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "tab_specific": {
+      },
+      "withheld": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      }
+   },
+   "service_worker_keepalives": {
+      "activites": [  ],
+      "count": 0
+   },
+   "type": "TYPE_EXTENSION",
+   "version": "1.0.0"
+}, {
+   "background_page_keepalives": {
+      "activites": [  ],
+      "count": -1
+   },
+   "creation_flags": [ "REQUIRE_KEY" ],
+   "disable_reasons": [  ],
+   "event_listeners": {
+      "count": 0,
+      "listeners": [  ]
+   },
+   "guid": "0481ca40-ac4c-4e63-a7c6-95b205dc5447",
+   "id": "mgndgikekgjfcpckkfioiadnlibdjbkf",
+   "location": "COMPONENT",
+   "manifest_version": 1,
+   "name": "Chrome",
+   "path": "/opt/google/chrome/resources/chrome_app",
+   "permissions": {
+      "active": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "optional": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "tab_specific": {
+      },
+      "withheld": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      }
+   },
+   "service_worker_keepalives": {
+      "activites": [  ],
+      "count": 0
+   },
+   "type": "TYPE_HOSTED_APP",
+   "version": "0.1"
+}, {
+   "background_page_keepalives": {
+      "activites": [  ],
+      "count": -1
+   },
+   "creation_flags": [ "REQUIRE_KEY" ],
+   "disable_reasons": [  ],
+   "event_listeners": {
+      "count": 0,
+      "listeners": [  ]
+   },
+   "guid": "ebfe3a58-4410-4fc9-8014-587e691ce34d",
+   "id": "mhjfbmdgcfjbbpaeojofohoefgiehjai",
+   "location": "COMPONENT",
+   "manifest_version": 2,
+   "name": "Chrome PDF Viewer",
+   "path": "/opt/google/chrome/resources/pdf",
+   "permissions": {
+      "active": {
+         "api": [ "contentSettings", "fileSystem", "fileSystem.write", "metricsPrivate", "tabs", "resourcesPrivate", "pdfViewerPrivate" ],
+         "explicit_hosts": [ "chrome://resources/*", "chrome://webui-test/*" ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "optional": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "tab_specific": {
+      },
+      "withheld": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      }
+   },
+   "service_worker_keepalives": {
+      "activites": [  ],
+      "count": 0
+   },
+   "type": "TYPE_EXTENSION",
+   "version": "1"
+}, {
+   "background_page_keepalives": {
+      "activites": [  ],
+      "count": -1
+   },
+   "creation_flags": [ "REQUIRE_KEY", "FROM_WEBSTORE" ],
+   "disable_reasons": [  ],
+   "event_listeners": {
+      "count": 14,
+      "listeners": [ {
+         "event_name": "runtime.onSuspend",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://mkhjobnjhllkhekbbedlkmgcglgaeidc/"
+      }, {
+         "event_name": "runtime.onSuspend",
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://mkhjobnjhllkhekbbedlkmgcglgaeidc/"
+      }, {
+         "event_name": "storage.onChanged",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://mkhjobnjhllkhekbbedlkmgcglgaeidc/"
+      }, {
+         "event_name": "storage.onChanged",
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://mkhjobnjhllkhekbbedlkmgcglgaeidc/"
+      }, {
+         "event_name": "tabs.onActivated",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://mkhjobnjhllkhekbbedlkmgcglgaeidc/"
+      }, {
+         "event_name": "tabs.onActivated",
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://mkhjobnjhllkhekbbedlkmgcglgaeidc/"
+      }, {
+         "event_name": "tabs.onUpdated",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://mkhjobnjhllkhekbbedlkmgcglgaeidc/"
+      }, {
+         "event_name": "tabs.onUpdated",
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://mkhjobnjhllkhekbbedlkmgcglgaeidc/"
+      }, {
+         "event_name": "webRequest.onAuthRequired/s1",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://mkhjobnjhllkhekbbedlkmgcglgaeidc/"
+      }, {
+         "event_name": "webRequest.onAuthRequired/s1",
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://mkhjobnjhllkhekbbedlkmgcglgaeidc/"
+      }, {
+         "event_name": "webRequest.onBeforeRequest/s2",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://mkhjobnjhllkhekbbedlkmgcglgaeidc/"
+      }, {
+         "event_name": "webRequest.onBeforeRequest/s2",
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://mkhjobnjhllkhekbbedlkmgcglgaeidc/"
+      }, {
+         "event_name": "webRequest.onCompleted/s3",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://mkhjobnjhllkhekbbedlkmgcglgaeidc/"
+      }, {
+         "event_name": "webRequest.onCompleted/s3",
+         "is_for_service_worker": true,
+         "is_lazy": false,
+         "url": "chrome-extension://mkhjobnjhllkhekbbedlkmgcglgaeidc/"
+      } ]
+   },
+   "guid": "dd5e5f05-59b4-4647-8d92-f24ce5fde822",
+   "id": "mkhjobnjhllkhekbbedlkmgcglgaeidc",
+   "location": "EXTERNAL_POLICY_DOWNLOAD",
+   "manifest_version": 3,
+   "name": "iboss Cloud Connector",
+   "path": "/home/chronos/u-fb7a8c73e847cb5c1c04271d36b4d989f1e79bfb/Extensions/mkhjobnjhllkhekbbedlkmgcglgaeidc/1.0.75_1",
+   "permissions": {
+      "active": {
+         "api": [ "alarms", "browsingData", "identity", "identity.email", "management", "notifications", "proxy", "storage", "webRequest", "webRequestBlocking", "enterprise.deviceAttributes", "declarativeNetRequest", "enterprise.networkingAttributes", "declarativeNetRequestWithHostAccess", "webRequestAuthProvider" ],
+         "explicit_hosts": [ "\u003Call_urls>" ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "optional": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "tab_specific": {
+      },
+      "withheld": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      }
+   },
+   "service_worker_keepalives": {
+      "activites": [  ],
+      "count": 0
+   },
+   "type": "TYPE_EXTENSION",
+   "version": "1.0.75"
+}, {
+   "background_page_keepalives": {
+      "activites": [  ],
+      "count": 0
+   },
+   "creation_flags": [ "REQUIRE_KEY", "FROM_WEBSTORE", "WAS_INSTALLED_BY_DEFAULT" ],
+   "disable_reasons": [  ],
+   "event_listeners": {
+      "count": 1,
+      "listeners": [ {
+         "event_name": "app.runtime.onLaunched",
+         "is_for_service_worker": false,
+         "is_lazy": true,
+         "url": ""
+      } ]
+   },
+   "guid": "8033068b-370e-45ed-a874-c035ccd2161d",
+   "id": "mmfbcljfglbokpmkimbfghdkjmjhdgbg",
+   "location": "EXTERNAL_PREF_DOWNLOAD",
+   "manifest_version": 2,
+   "name": "Text",
+   "path": "/home/chronos/u-fb7a8c73e847cb5c1c04271d36b4d989f1e79bfb/Extensions/mmfbcljfglbokpmkimbfghdkjmjhdgbg/0.8.4_0",
+   "permissions": {
+      "active": {
+         "api": [ "app.window.alwaysOnTop", "fileSystem", "fileSystem.retainEntries", "fileSystem.write", "storage" ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "optional": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "tab_specific": {
+      },
+      "withheld": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      }
+   },
+   "service_worker_keepalives": {
+      "activites": [  ],
+      "count": 0
+   },
+   "type": "TYPE_PLATFORM_APP",
+   "version": "0.8.4"
+}, {
+   "background_page_keepalives": {
+      "activites": [  ],
+      "count": -1
+   },
+   "creation_flags": [ "REQUIRE_KEY" ],
+   "disable_reasons": [  ],
+   "event_listeners": {
+      "count": 0,
+      "listeners": [  ]
+   },
+   "guid": "0f0bdfd9-7d5c-4bd6-9c5e-0fcf79d55aea",
+   "id": "mppnpdlheglhdfmldimlhpnegondlapf",
+   "location": "COMPONENT",
+   "manifest_version": 2,
+   "name": "__MSG_chos_inputtool_title__",
+   "path": "/opt/google/chrome/resources/keyboard",
+   "permissions": {
+      "active": {
+         "api": [ "inputMethodPrivate", "tabs", "virtualKeyboardPrivate" ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "optional": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "tab_specific": {
+      },
+      "withheld": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      }
+   },
+   "service_worker_keepalives": {
+      "activites": [  ],
+      "count": 0
+   },
+   "type": "TYPE_EXTENSION",
+   "version": "1.0.6.0"
+}, {
+   "background_page_keepalives": {
+      "activites": [  ],
+      "count": 0
+   },
+   "creation_flags": [ "REQUIRE_KEY" ],
+   "disable_reasons": [  ],
+   "event_listeners": {
+      "count": 1,
+      "listeners": [ {
+         "event_name": "runtime.onConnectExternal",
+         "is_for_service_worker": false,
+         "is_lazy": true,
+         "url": ""
+      } ]
+   },
+   "guid": "69686c77-a361-4cac-86a4-104e69f75379",
+   "id": "nkeimhogjdpnpccoofpliimaahmaaome",
+   "location": "COMPONENT",
+   "manifest_version": 2,
+   "name": "Google Hangouts",
+   "path": "/opt/google/chrome/resources/hangout_services",
+   "permissions": {
+      "active": {
+         "api": [ "processes", "webrtcLoggingPrivate", "system.cpu", "enterprise.hardwarePlatform" ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "optional": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "tab_specific": {
+      },
+      "withheld": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      }
+   },
+   "service_worker_keepalives": {
+      "activites": [  ],
+      "count": 0
+   },
+   "type": "TYPE_EXTENSION",
+   "version": "1.3.24"
+}, {
+   "background_page_keepalives": {
+      "activites": [  ],
+      "count": 0
+   },
+   "creation_flags": [ "REQUIRE_KEY", "FROM_WEBSTORE", "WAS_INSTALLED_BY_DEFAULT" ],
+   "disable_reasons": [  ],
+   "event_listeners": {
+      "count": 2,
+      "listeners": [ {
+         "event_name": "app.runtime.onLaunched",
+         "is_for_service_worker": false,
+         "is_lazy": true,
+         "url": ""
+      }, {
+         "event_name": "runtime.onConnectExternal",
+         "is_for_service_worker": false,
+         "is_lazy": true,
+         "url": ""
+      } ]
+   },
+   "guid": "8d305698-15fa-4da3-8f3f-a14a98973a48",
+   "id": "nmmhkkegccagdldgiimedpiccmgmieda",
+   "location": "EXTERNAL_COMPONENT",
+   "manifest_version": 2,
+   "name": "Chrome Web Store Payments",
+   "path": "/home/chronos/u-fb7a8c73e847cb5c1c04271d36b4d989f1e79bfb/Extensions/nmmhkkegccagdldgiimedpiccmgmieda/1.0.0.6_0",
+   "permissions": {
+      "active": {
+         "api": [ "identity", "webview" ],
+         "explicit_hosts": [ "https://payments.google.com/*", "https://sandbox.google.com/*", "https://www.google.com/*", "https://www.googleapis.com/*" ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "optional": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "tab_specific": {
+      },
+      "withheld": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      }
+   },
+   "service_worker_keepalives": {
+      "activites": [  ],
+      "count": 0
+   },
+   "type": "TYPE_PLATFORM_APP",
+   "version": "1.0.0.6"
+}, {
+   "background_page_keepalives": {
+      "activites": [  ],
+      "count": -1
+   },
+   "creation_flags": [ "REQUIRE_KEY" ],
+   "disable_reasons": [  ],
+   "event_listeners": {
+      "count": 1,
+      "listeners": [ {
+         "event_name": "runtime.onConnectNative",
+         "is_for_service_worker": true,
+         "is_lazy": true,
+         "url": "chrome-extension://pmfjbimdmchhbnneeidfognadeopoehp/"
+      } ]
+   },
+   "guid": "ad7d5ba9-6a37-492e-ae2b-ee6ec2e01009",
+   "id": "pmfjbimdmchhbnneeidfognadeopoehp",
+   "location": "COMPONENT",
+   "manifest_version": 3,
+   "name": "Image loader",
+   "path": "/opt/google/chrome/resources/image_loader",
+   "permissions": {
+      "active": {
+         "api": [ "nativeMessaging", "offscreen", "imageLoaderPrivate" ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "optional": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      },
+      "tab_specific": {
+      },
+      "withheld": {
+         "api": [  ],
+         "explicit_hosts": [  ],
+         "manifest": [  ],
+         "scriptable_hosts": [  ]
+      }
+   },
+   "service_worker_keepalives": {
+      "activites": [  ],
+      "count": 0
+   },
+   "type": "TYPE_EXTENSION",
+   "version": "0.5"
+} ]
