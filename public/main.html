@@ -91,39 +91,75 @@
   <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js"></script>
   <script src="/firebase-init.js"></script>
+<script>
+  // Initialize Firebase Database
+  const db = firebase.database();
 
-  <script>
-    const db = firebase.database();
+  // Register user
+  function registerUser() {
+    const name = document.getElementById('usernameInput').value.trim();
+    if (!name) return;
 
-    function registerUser() {
-      const name = document.getElementById('usernameInput').value.trim();
-      if (!name) return;
+    // Store current user in localStorage
+    localStorage.setItem('currentUser', name);
+    document.getElementById('accountTag').textContent = name;
+    document.getElementById('accountTag').style.display = 'block';
+    document.getElementById('registerMessage').textContent = `✔️ Registered as ${name}`;
 
-      // Store current user in localStorage
-      localStorage.setItem('currentUser', name);
+    // Add user to Firebase
+    db.ref('users/' + name).set({ name });
+
+    // Reload user list
+    loadUsers();
+  }
+
+  // Load users from Firebase
+  function loadUsers() {
+    db.ref('users').once('value', snapshot => {
+      const userList = document.getElementById('userList');
+      userList.innerHTML = ''; // Clear existing list
+      snapshot.forEach(child => {
+        const entry = document.createElement('div');
+        entry.className = 'username-entry';
+        entry.textContent = child.key;
+        userList.appendChild(entry);
+      });
+    });
+  }
+
+  // Navigate to share page
+  function goToShare() {
+    const name = localStorage.getItem('currentUser');
+    if (!name) {
+      alert("🚫 Error 5083: user not registered");
+      return;
+    }
+    // Check if user exists in Firebase
+    db.ref('users/' + name).once('value', snapshot => {
+      if (snapshot.exists()) {
+        window.location.href = 'share.html';
+      } else {
+        alert("🚫 Error 5083: user not registered");
+      }
+    });
+  }
+
+  // Navigate to test page
+  function goToTest() {
+    window.location.href = 'test.js'; // Adjust if it's a different file
+  }
+
+  // On page load
+  window.onload = () => {
+    const name = localStorage.getItem('currentUser');
+    if (name) {
       document.getElementById('accountTag').textContent = name;
       document.getElementById('accountTag').style.display = 'block';
-      document.getElementById('registerMessage').textContent = `✔️ Registered as ${name}`;
-
-      // Push user to Firebase
-      db.ref('users/' + name).set({ name });
-
-      // Reload user list
-      loadUsers();
     }
+    loadUsers();
+  };
+</script>
 
-    function loadUsers() {
-      db.ref('users').once('value', snapshot => {
-        const userList = document.getElementById('userList');
-        userList.innerHTML = ''; // clear old
-        snapshot.forEach(child => {
-          const entry = document.createElement('div');
-          entry.className = 'username-entry';
-          entry.textContent = child.key;
-          userList.appendChild(entry);
-        });
-      });
-    }
 
     function goToShare() {
       const name = localStorage.getItem('currentUser');
