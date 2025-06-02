@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -245,11 +246,20 @@
       <button onclick="acceptCall()">Yes</button>
       <button onclick="rejectCall()">No</button>
     </div>
-  </main>
-  <footer>
-    ✊ anti-iboss-union 2025
-  </footer>
-  <script>
+ </main>
+<footer>
+  ✊ anti-iboss-union 2025
+</footer>
+
+<!-- Firebase and App Scripts Here -->
+<script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-database.js"></script>
+<script src="firebase-init.js"></script>
+<script src="main.js"></script>
+
+</body>
+</html>
+
     // --- Share page logic (unchanged) ---
     const SECRET_CODE = 'delete4freedom';
     let posts = JSON.parse(localStorage.getItem('sharedPosts')) || [];
