@@ -16,23 +16,28 @@
       align-items: center;
       min-height: 100vh;
     }
-    header, footer {
+    header {
       width: 100%;
-      background: #111;
-      color: #00ffcc;
       padding: 1em;
-      text-align: center;
-      border-top: 1px solid #333;
+      background-color: #111;
       border-bottom: 2px solid #00ffcc;
+      text-align: center;
+      position: relative;
+      animation: fadeIn 1s ease-in-out;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.5em;
     }
     #adminToggle {
       position: absolute;
       top: 10px;
       left: 10px;
       background: #000;
+      color: #00ffcc;
       border: 1px solid #00ffcc;
-      padding: 5px 10px;
       border-radius: 5px;
+      padding: 5px 10px;
       cursor: pointer;
     }
     #accountTag {
@@ -44,48 +49,72 @@
       padding: 5px 10px;
       border-radius: 5px;
       font-weight: bold;
-    }
-    main {
-      flex: 1;
-      padding: 2em;
-      text-align: center;
-    }
-    input[type="text"] {
-      padding: 0.5em;
-      border: 1px solid #00ffcc;
-      background: #000;
-      color: #00ffcc;
-      border-radius: 5px;
-      width: 100%;
-      max-width: 300px;
-      margin: 0.5em 0;
-    }
-    button {
-      padding: 0.5em 1em;
-      margin: 0.3em;
-      background: #00ffcc;
-      color: #000;
-      border: none;
-      border-radius: 5px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #00ccaa;
+      display: none;
     }
     #adminBox {
-      display: none;
       position: absolute;
       top: 50px;
       left: 10px;
       background: #111;
       border: 1px solid #00ffcc;
       padding: 1em;
+      display: none;
       border-radius: 10px;
+      animation: slideOut 0.5s forwards;
     }
-    #userList {
+    main {
+      flex: 1;
+      padding: 2em;
+      text-align: center;
+      animation: slideIn 1s ease-in-out;
+    }
+    input[type="text"] {
+      padding: 0.5em;
+      font-size: 1em;
+      border: 1px solid #00ffcc;
+      background-color: #000;
+      color: #00ffcc;
+      border-radius: 5px;
+      margin: 0.5em 0;
+      width: 90%;
+      max-width: 300px;
+    }
+    button {
+      padding: 0.5em 1em;
+      background-color: #00ffcc;
+      border: none;
+      border-radius: 5px;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      margin: 0.3em;
+    }
+    button:hover {
+      background-color: #00ccaa;
+    }
+    #registeredList {
       margin-top: 2em;
       text-align: left;
+      max-width: 300px;
+      animation: fadeIn 1s ease-in-out;
+    }
+    footer {
+      width: 100%;
+      padding: 1em;
+      text-align: center;
+      font-size: 0.9em;
+      color: #777;
+      border-top: 1px solid #333;
+      background-color: #111;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; } to { opacity: 1; }
+    }
+    @keyframes slideIn {
+      from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes slideOut {
+      from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; }
     }
   </style>
 </head>
@@ -93,103 +122,100 @@
   <header>
     <h1>anti-iboss-union</h1>
     <div id="adminToggle" onclick="toggleAdminBox()">Admin</div>
-    <div id="accountTag" style="display:none"></div>
+    <div id="accountTag"></div>
     <div id="adminBox">
-      <input type="text" id="adminCode" placeholder="Enter Admin Code"><br><br>
-      <input type="text" id="deleteUser" placeholder="Username to delete"><br><br>
+      <input type="text" id="adminCode" placeholder="Enter Admin Code" /><br><br>
+      <input type="text" id="deleteUser" placeholder="Username to delete" /><br><br>
       <button onclick="deleteUser()">Delete User</button>
     </div>
   </header>
 
   <main>
-    <input type="text" id="username" placeholder="Enter your name">
-    <button onclick="register()">Register</button>
+    <input type="text" id="username" placeholder="Enter your name" />
+    <button id="registerBtn" onclick="register()">Register</button>
     <p id="registerMessage"></p>
 
     <button onclick="goToSharePage()">Go to Sharing Page</button>
     <button onclick="goToTestPage()">Go to Test Page</button>
 
-    <div id="userList">
-      <h3>Registered Rebels:</h3>
-      <ul id="userDisplayList"></ul>
+    <div id="registeredList">
+      <h3>📜 Registered Rebels</h3>
+      <ul id="userList"></ul>
     </div>
   </main>
 
-  <footer>
-    ✊ anti-iboss-union 2025
-  </footer>
+  <footer>✊ anti-iboss-union 2025</footer>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-database.js"></script>
+  <script src="public/firebase-init.js"></script>
 
   <script>
+    const db = firebase.database();
     const SECRET_CODE = 'delete4freedom';
-    let storedUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
-
-    function renderUserList() {
-      const list = document.getElementById('userDisplayList');
-      list.innerHTML = '';
-      storedUsers.forEach(user => {
-        const li = document.createElement('li');
-        li.textContent = user;
-        list.appendChild(li);
-      });
-    }
 
     function register() {
       const name = document.getElementById('username').value.trim();
       if (!name) return;
 
-      if (!storedUsers.includes(name)) {
-        storedUsers.push(name);
-        localStorage.setItem('registeredUsers', JSON.stringify(storedUsers));
-      }
-
-      localStorage.setItem('registeredOnce', 'true');
       localStorage.setItem('currentUser', name);
-
+      localStorage.setItem('registeredOnce', 'true');
       document.getElementById('registerMessage').textContent = `✔️ Registered as ${name}`;
       document.getElementById('accountTag').textContent = name;
       document.getElementById('accountTag').style.display = 'block';
 
-      renderUserList();
+      db.ref('users/' + name).set({ registered: true });
+      updateList();
+    }
+
+    function goToSharePage() {
+      const current = localStorage.getItem('currentUser');
+      db.ref('users/' + current).get().then((snapshot) => {
+        if (snapshot.exists()) {
+          window.location.href = 'share.html';
+        } else {
+          alert('🚫 Error 5083: user not registered');
+        }
+      });
+    }
+
+    function goToTestPage() {
+      window.location.href = 'test.js'; // or test.html if you're using HTML
     }
 
     function deleteUser() {
       const code = document.getElementById('adminCode').value.trim();
       const target = document.getElementById('deleteUser').value.trim();
 
-      if (code === SECRET_CODE && storedUsers.includes(target)) {
-        storedUsers = storedUsers.filter(user => user !== target);
-        localStorage.setItem('registeredUsers', JSON.stringify(storedUsers));
-
+      if (code === SECRET_CODE && target) {
+        db.ref('users/' + target).remove();
         if (localStorage.getItem('currentUser') === target) {
-          localStorage.removeItem('registeredOnce');
-          localStorage.removeItem('currentUser');
+          localStorage.clear();
+          document.getElementById('registerMessage').textContent = "❌ Account deleted. Admin needed to re-register.";
           document.getElementById('accountTag').style.display = 'none';
-          document.getElementById('registerMessage').textContent = "❌ Account deleted. Only admins can re-enable registration.";
         }
-
-        renderUserList();
-        document.getElementById('deleteUser').value = '';
+        updateList();
       } else {
         alert('❌ Invalid admin code or user not found.');
       }
     }
 
-    function goToSharePage() {
-      const currentUser = localStorage.getItem('currentUser');
-      if (storedUsers.includes(currentUser)) {
-        window.location.href = 'share.html';
-      } else {
-        alert('🚫 Error 5083: user not registered');
-      }
-    }
-
-    function goToTestPage() {
-      window.location.href = 'test.js';
-    }
-
     function toggleAdminBox() {
       const box = document.getElementById('adminBox');
       box.style.display = box.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function updateList() {
+      const list = document.getElementById('userList');
+      list.innerHTML = '';
+      db.ref('users').once('value').then(snapshot => {
+        snapshot.forEach(child => {
+          const li = document.createElement('li');
+          li.textContent = child.key;
+          list.appendChild(li);
+        });
+      });
     }
 
     window.onload = () => {
@@ -198,9 +224,8 @@
         document.getElementById('accountTag').textContent = current;
         document.getElementById('accountTag').style.display = 'block';
       }
-      renderUserList();
+      updateList();
     };
   </script>
 </body>
 </html>
-
