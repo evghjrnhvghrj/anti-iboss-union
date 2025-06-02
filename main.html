@@ -95,13 +95,10 @@
       font-weight: bold;
       cursor: pointer;
       transition: background-color 0.3s;
+      margin-bottom: 0.5em;
     }
     button:hover {
       background-color: #00ccaa;
-    }
-    #rebelList {
-      margin-top: 2em;
-      animation: fadeIn 1.5s ease-in-out;
     }
     footer {
       width: 100%;
@@ -140,10 +137,11 @@
     <p id="registerMessage"></p>
     <br>
     <button onclick="goToSharePage()">Go to Sharing Page</button>
-    <div id="rebelList">
-      <h3>Registered Rebels</h3>
-      <ul id="userList"></ul>
-    </div>
+    <br>
+    <button onclick="goToTestPage()">Go to Test Page</button>
+    <br>
+    <h2>Registered Rebels</h2>
+    <ul id="userList"></ul>
   </main>
   <footer>
     ✊ anti-iboss-union 2025
@@ -167,7 +165,7 @@
       document.getElementById('registerMessage').textContent = `✔️ Registered as ${name}`;
       document.getElementById('accountTag').textContent = name;
       document.getElementById('accountTag').style.display = 'block';
-      updateUserList();
+      renderUserList();
     }
 
     function goToSharePage() {
@@ -179,6 +177,10 @@
       } else {
         alert('🚫 Error 5083: user not registered');
       }
+    }
+
+    function goToTestPage() {
+      window.location.href = 'test.js';
     }
 
     function deleteUser() {
@@ -200,13 +202,18 @@
         }
 
         document.getElementById('deleteUser').value = '';
-        updateUserList();
+        renderUserList();
       } else {
         alert('❌ Invalid admin code or user not found.');
       }
     }
 
-    function updateUserList() {
+    function toggleAdminBox() {
+      const box = document.getElementById('adminBox');
+      box.style.display = box.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function renderUserList() {
       const list = document.getElementById('userList');
       list.innerHTML = '';
       storedUsers.forEach(user => {
@@ -216,19 +223,15 @@
       });
     }
 
-    function toggleAdminBox() {
-      const box = document.getElementById('adminBox');
-      box.style.display = box.style.display === 'block' ? 'none' : 'block';
-    }
-
     window.onload = () => {
       const current = localStorage.getItem('currentUser');
       if (current) {
         document.getElementById('accountTag').textContent = current;
         document.getElementById('accountTag').style.display = 'block';
       }
-      updateUserList();
+      renderUserList();
     };
   </script>
 </body>
 </html>
+
