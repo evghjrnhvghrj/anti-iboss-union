@@ -3,133 +3,157 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Sharing Page | anti-iboss-union</title>
+  <title>Share Page | anti-iboss-union</title>
   <style>
     body {
-      background-color: #0a0a0a;
-      color: #00ffcc;
+      margin: 0;
+      padding: 0;
       font-family: 'Courier New', monospace;
-      padding: 2em;
-      text-align: center;
-    }
-
-    h1 {
-      font-size: 2em;
-      margin-bottom: 1em;
-    }
-
-    #messageList {
-      margin-top: 2em;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-      text-align: left;
-    }
-
-    input, button {
-      padding: 0.5em;
-      margin: 0.5em;
-      border-radius: 5px;
-      border: none;
-      font-size: 1em;
-    }
-
-    input {
-      width: 70%;
       background: #000;
       color: #00ffcc;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+    header {
+      width: 100%;
+      padding: 1em;
+      background-color: #111;
+      border-bottom: 2px solid #00ffcc;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2em;
+    }
+    #usernameTag {
+      margin-top: 0.5em;
+      font-size: 1em;
+      color: #aaa;
+    }
+    main {
+      flex: 1;
+      padding: 2em;
+      width: 100%;
+      max-width: 600px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    textarea {
+      width: 90%;
+      max-width: 500px;
+      height: 100px;
+      padding: 10px;
+      font-size: 1em;
+      background-color: #000;
+      color: #00ffcc;
       border: 1px solid #00ffcc;
+      border-radius: 5px;
+      resize: none;
     }
-
     button {
-      background: #00ffcc;
+      margin-top: 1em;
+      padding: 0.5em 1em;
+      font-size: 1em;
+      background-color: #00ffcc;
       color: #000;
+      border: none;
+      border-radius: 5px;
       cursor: pointer;
-    }
-
-    button:hover {
-      background: #00ccaa;
-    }
-
-    .message {
-      border-bottom: 1px solid #00ffcc44;
-      padding: 0.5em 0;
-    }
-
-    .username {
       font-weight: bold;
-      color: #00ffaa;
+    }
+    button:hover {
+      background-color: #00ccaa;
+    }
+    #sharedMessages {
+      margin-top: 2em;
+      width: 100%;
+      max-height: 300px;
+      overflow-y: auto;
+      background-color: #111;
+      border: 1px solid #00ffcc;
+      border-radius: 5px;
+      padding: 1em;
+    }
+    .message {
+      padding: 0.5em;
+      margin-bottom: 0.5em;
+      border-bottom: 1px solid #222;
+    }
+    footer {
+      width: 100%;
+      padding: 1em;
+      text-align: center;
+      font-size: 0.9em;
+      color: #777;
+      border-top: 1px solid #333;
+      background-color: #111;
     }
   </style>
 </head>
 <body>
+  <header>
+    <h1>🔗 Rebel Share Terminal</h1>
+    <div id="usernameTag">Loading...</div>
+  </header>
 
-  <h1>💬 Rebel Sharing Hub</h1>
+  <main>
+    <textarea id="messageInput" placeholder="Type your message here..."></textarea>
+    <button onclick="submitMessage()">Send Message</button>
 
-  <div id="notAllowed" style="display:none; color:red;">
-    ❌ Error 5083: user not registered
-  </div>
+    <div id="sharedMessages">
+      <h3>📡 Shared Messages</h3>
+      <div id="messageList"></div>
+    </div>
+  </main>
 
-  <div id="shareBox" style="display:none;">
-    <input type="text" id="messageInput" placeholder="Share your rebel thoughts..." />
-    <button onclick="postMessage()">Post</button>
+  <footer>✊ anti-iboss-union | share your truth</footer>
 
-    <div id="messageList"></div>
-  </div>
-
-  <!-- Firebase scripts -->
+  <!-- Firebase Scripts -->
   <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-database.js"></script>
-  <script src="public/firebase-init.js"></script>
+  <script src="pubic/firebase-init.js"></script>
 
   <script>
     const db = firebase.database();
+    const currentUser = localStorage.getItem("currentUser");
+    const messageList = document.getElementById("messageList");
+    const usernameTag = document.getElementById("usernameTag");
 
-    const currentUser = localStorage.getItem('currentUser');
-    const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
-
-    const shareBox = document.getElementById('shareBox');
-    const notAllowed = document.getElementById('notAllowed');
-
-    if (registeredUsers.includes(currentUser)) {
-      shareBox.style.display = 'block';
-      loadMessages();
+    if (currentUser) {
+      usernameTag.textContent = "Logged in as: " + currentUser;
     } else {
-      notAllowed.style.display = 'block';
+      usernameTag.textContent = "🚫 Not logged in. Please return to main page.";
     }
 
-    function postMessage() {
-      const text = document.getElementById('messageInput').value.trim();
-      if (!text || !currentUser) return;
+    function submitMessage() {
+      const message = document.getElementById("messageInput").value.trim();
+      if (!message || !currentUser) return;
 
-      const newMsg = db.ref('messages').push();
-      newMsg.set({
+      const messageObj = {
         user: currentUser,
-        text: text,
+        text: message,
         timestamp: Date.now()
-      });
+      };
 
-      document.getElementById('messageInput').value = '';
+      db.ref("shared").push(messageObj);
+      document.getElementById("messageInput").value = "";
     }
 
-    function loadMessages() {
-      db.ref('messages').on('value', (snapshot) => {
-        const data = snapshot.val();
-        const list = document.getElementById('messageList');
-        list.innerHTML = '';
-
-        if (data) {
-          const entries = Object.values(data).sort((a, b) => b.timestamp - a.timestamp);
-          entries.forEach(entry => {
-            const div = document.createElement('div');
-            div.className = 'message';
-            div.innerHTML = `<span class="username">${entry.user}</span>: ${entry.text}`;
-            list.appendChild(div);
-          });
-        }
-      });
+    function displayMessage(data) {
+      const msg = data.val();
+      const div = document.createElement("div");
+      div.className = "message";
+      div.innerHTML = `<strong>${msg.user}</strong>: ${msg.text}`;
+      messageList.appendChild(div);
+      messageList.scrollTop = messageList.scrollHeight;
     }
+
+    db.ref("shared").on("child_added", displayMessage);
   </script>
 </body>
 </html>
+
 
