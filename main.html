@@ -99,6 +99,10 @@
     button:hover {
       background-color: #00ccaa;
     }
+    #rebelList {
+      margin-top: 2em;
+      animation: fadeIn 1.5s ease-in-out;
+    }
     footer {
       width: 100%;
       padding: 1em;
@@ -136,6 +140,10 @@
     <p id="registerMessage"></p>
     <br>
     <button onclick="goToSharePage()">Go to Sharing Page</button>
+    <div id="rebelList">
+      <h3>Registered Rebels</h3>
+      <ul id="userList"></ul>
+    </div>
   </main>
   <footer>
     ✊ anti-iboss-union 2025
@@ -159,6 +167,7 @@
       document.getElementById('registerMessage').textContent = `✔️ Registered as ${name}`;
       document.getElementById('accountTag').textContent = name;
       document.getElementById('accountTag').style.display = 'block';
+      updateUserList();
     }
 
     function goToSharePage() {
@@ -191,9 +200,20 @@
         }
 
         document.getElementById('deleteUser').value = '';
+        updateUserList();
       } else {
         alert('❌ Invalid admin code or user not found.');
       }
+    }
+
+    function updateUserList() {
+      const list = document.getElementById('userList');
+      list.innerHTML = '';
+      storedUsers.forEach(user => {
+        const li = document.createElement('li');
+        li.textContent = user;
+        list.appendChild(li);
+      });
     }
 
     function toggleAdminBox() {
@@ -207,7 +227,9 @@
         document.getElementById('accountTag').textContent = current;
         document.getElementById('accountTag').style.display = 'block';
       }
+      updateUserList();
     };
   </script>
 </body>
 </html>
+
