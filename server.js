@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const app = express();
-const PORT = 8080;
+const PORT = 3000;
 
 // Path to users.json file
 const USERS_FILE = path.join(__dirname, 'users.json');
