@@ -381,7 +381,7 @@
       }));
       incomingDiv.classList.remove('active');
       // Redirect to call.html with both usernames as query params
-      window.location.href = `call.html?your=${encodeURIComponent(username)}&call=${encodeURIComponent(fromUser)}`;
+      window.location.href = `public/call.html?your=${encodeURIComponent(username)}&call=${encodeURIComponent(fromUser)}`;
     }
 
     // Reject call: notify caller, show fail message
