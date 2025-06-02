@@ -99,6 +99,19 @@
     button:hover {
       background-color: #00ccaa;
     }
+    button {
+      padding: 0.5em 1em;
+      background-color: #00ffcc;
+      border: none;
+      border-radius: 5px;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #00ccaa;
+    }
     #rebelList {
       margin-top: 2em;
       animation: fadeIn 1.5s ease-in-out;
@@ -140,6 +153,7 @@
     <p id="registerMessage"></p>
     <br>
     <button onclick="goToSharePage()">Go to Sharing Page</button>
+    <button onclick="goToTestPage()">Go To Test Page</button>
     <div id="rebelList">
       <h3>Registered Rebels</h3>
       <ul id="userList"></ul>
@@ -173,6 +187,7 @@
     function goToSharePage() {
       const allowedUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
       const currentUser = localStorage.getItem('currentUser');
+  
 
       if (allowedUsers.includes(currentUser)) {
         window.location.href = 'share.html';
@@ -181,6 +196,14 @@
       }
     }
 
+   function GoToTestPage() {
+      const allowedUsers = JSON.parse(localStorage.getItem('tester')) || [];
+      const currentUser = localStorage.getItem('test');
+
+     
+     if (allowedUsers.includes(test)) {
+        window.location.href = 'test.js';
+     }
     function deleteUser() {
       const code = document.getElementById('adminCode').value.trim();
       const target = document.getElementById('deleteUser').value.trim();
