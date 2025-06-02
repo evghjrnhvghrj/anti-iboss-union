@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Share | anti-iboss-union</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Courier New', monospace;
+      background: #0a0a0a;
+      color: #00ffcc;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    header {
+      width: 100%;
+      padding: 1em;
+      background-color: #111;
+      border-bottom: 2px solid #00ffcc;
+      text-align: center;
+      animation: fadeIn 1s ease-in-out;
+      position: relative;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.5em;
+      color: #00ffcc;
+    }
+    #adminTrigger {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: #000;
+      color: #00ffcc;
+      border: 1px solid #00ffcc;
+      border-radius: 5px;
+      padding: 5px 10px;
+      font-size: 0.9em;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      z-index: 10;
+    }
+    #adminTrigger:hover {
+      background: #00ccaa;
+      color: #000;
+    }
+    #voiceTalkBtn {
+      position: absolute;
+      top: 50px;
+      left: 10px;
+      background: #000;
+      color: #00ffcc;
+      border: 1px solid #00ffcc;
+      border-radius: 5px;
+      padding: 7px 16px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background 0.3s, color 0.3s;
+      z-index: 9;
+      margin-top: 10px;
+    }
+    #voiceTalkBtn:hover {
+      background: #00ccaa;
+      color: #000;
+    }
+    #adminSlide {
+      position: absolute;
+      top: 90px;
+      left: 10px;
+      background: #111;
+      border: 1px solid #00ffcc;
+      border-radius: 8px;
+      padding: 1em;
+      display: none;
+      flex-direction: column;
+      animation: slideOut 0.5s forwards;
+    }
+    #adminSlide.active {
+      display: flex;
+      animation: slideInFromLeft 0.5s forwards;
+    }
+    #adminSlide input {
+      margin-bottom: 0.5em;
+      padding: 0.5em;
+      font-size: 1em;
+      background: #000;
+      color: #00ffcc;
+      border: 1px solid #00ffcc;
+      border-radius: 5px;
+    }
+    main {
+      flex: 1;
+      width: 90%;
+      max-width: 800px;
+      padding: 2em;
+      text-align: center;
+      animation: slideIn 1s ease-in-out;
+    }
+    input[type="text"] {
+      padding: 0.5em;
+      font-size: 1em;
+      border: 1px solid #00ffcc;
+      background-color: #000;
+      color: #00ffcc;
+      border-radius: 5px;
+      margin: 0.5em 0;
+      width: 100%;
+    }
+    button {
+      padding: 0.5em 1em;
+      background-color: #00ffcc;
+      border: none;
+      border-radius: 5px;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #00ccaa;
+    }
+    #posts {
+      margin-top: 2em;
+      width: 100%;
+      text-align: left;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+    .post {
+      background-color: #111;
+      border: 1px solid #00ffcc;
+      border-radius: 8px;
+      padding: 1em;
+      margin-bottom: 1em;
+      animation: fadeInUp 0.6s ease-in-out;
+    }
+    .comment {
+      margin-left: 1em;
+      padding-left: 1em;
+      border-left: 2px solid #00ffcc;
+      margin-top: 0.5em;
+      animation: fadeInUp 0.5s ease-in-out;
+    }
+    #yourUsernameBar {
+      width: 100%;
+      background: #111;
+      border-bottom: 1px solid #00ffcc;
+      padding: 0.5em 0;
+      text-align: center;
+    }
+    #yourUsernameBar input {
+      width: 200px;
+      display: inline-block;
+      margin: 0 0.5em;
+    }
+    /* Slide-in notification */
+    #incomingCall {
+      display: none;
+      position: fixed;
+      top: 30%;
+      right: -400px;
+      width: 340px;
+      background: #111;
+      border: 2px solid #00ffcc;
+      border-radius: 10px 0 0 10px;
+      box-shadow: 0 0 30px #000;
+      color: #00ffcc;
+      padding: 1.5em;
+      z-index: 1000;
+      transition: right 0.6s cubic-bezier(.68,-0.55,.27,1.55);
+      animation: fadeIn 1s;
+    }
+    #incomingCall.active {
+      display: block;
+      right: 0;
+    }
+    #incomingCall button {
+      margin: 0.5em;
+      width: 80px;
+    }
+    #failMsg {
+      color: #f00;
+      font-size: 1.2em;
+      margin: 1em 0;
+    }
+    footer {
+      width: 100%;
+      padding: 1em;
+      text-align: center;
+      font-size: 0.9em;
+      color: #777;
+      border-top: 1px solid #333;
+      background-color: #111;
+      animation: fadeIn 2s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; } to { opacity: 1; }
+    }
+    @keyframes slideIn {
+      from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes fadeInUp {
+      from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes slideInFromLeft {
+      from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; }
+    }
+    @keyframes slideOut {
+      from { transform: translateX(0); opacity: 1; } to { transform: translateX(-100%); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div id="yourUsernameBar">
+    <label for="yourUsernameInput">Your Username:</label>
+    <input type="text" id="yourUsernameInput" placeholder="Type your username..." autocomplete="off" />
+  </div>
+  <header>
+    <h1>Share Zone</h1>
+    <div id="adminTrigger" onclick="toggleAdminSlide()">Admin?</div>
+    <button id="voiceTalkBtn" onclick="location.href='call.html'">Encrypted Voice Talk</button>
+    <div id="adminSlide">
+      <input type="text" id="adminCodeInput" placeholder="Enter admin code" />
+      <button onclick="verifyAdminCode()">Verify</button>
+    </div>
+  </header>
+  <main>
+    <input type="text" id="urlInput" placeholder="Enter a website URL" />
+    <button onclick="shareLink()">Share</button>
+    <div id="adminPanel" style="margin-top:2em; display:none">
+      <input type="text" id="deletePostId" placeholder="Post ID to delete" />
+      <button onclick="deletePost()">Delete Post</button><br><br>
+      <input type="text" id="deleteCommentId" placeholder="Comment ID to delete" />
+      <button onclick="deleteComment()">Delete Comment</button>
+    </div>
+    <div id="posts"></div>
+    <div id="failMsg" style="display:none;">Call failed.</div>
+    <!-- Incoming call notification -->
+    <div id="incomingCall">
+      <div id="incomingMsg"></div>
+      <button onclick="acceptCall()">Yes</button>
+      <button onclick="rejectCall()">No</button>
+    </div>
+  </main>
+  <footer>
+    ✊ anti-iboss-union 2025
+  </footer>
+  <script>
+    // --- Share page logic (unchanged) ---
+    const SECRET_CODE = 'delete4freedom';
+    let posts = JSON.parse(localStorage.getItem('sharedPosts')) || [];
+
+    function generateId() {
+      return '_' + Math.random().toString(36).substr(2, 9);
+    }
+
+    function shareLink() {
+      const url = document.getElementById('urlInput').value.trim();
+      if (!url) return;
+      const post = { id: generateId(), url, comments: [] };
+      posts.push(post);
+      localStorage.setItem('sharedPosts', JSON.stringify(posts));
+      renderPosts();
+      document.getElementById('urlInput').value = '';
+    }
+
+    function addComment(postId) {
+      const input = document.getElementById('comment-' + postId);
+      const comment = input.value.trim();
+      if (!comment) return;
+      const post = posts.find(p => p.id === postId);
+      post.comments.push({ id: generateId(), text: comment });
+      localStorage.setItem('sharedPosts', JSON.stringify(posts));
+      renderPosts();
+    }
+
+    function deletePost() {
+      const postId = document.getElementById('deletePostId').value.trim();
+      posts = posts.filter(p => p.id !== postId);
+      localStorage.setItem('sharedPosts', JSON.stringify(posts));
+      renderPosts();
+    }
+
+    function deleteComment() {
+      const commentId = document.getElementById('deleteCommentId').value.trim();
+      posts.forEach(post => {
+        post.comments = post.comments.filter(c => c.id !== commentId);
+      });
+      localStorage.setItem('sharedPosts', JSON.stringify(posts));
+      renderPosts();
+    }
+
+    function renderPosts() {
+      const container = document.getElementById('posts');
+      container.innerHTML = '';
+      posts.forEach(post => {
+        const div = document.createElement('div');
+        div.className = 'post';
+        div.innerHTML = `<strong>Post ID:</strong> ${post.id}<br><a href="${post.url}" target="_blank">${post.url}</a><br>
+                          <input id="comment-${post.id}" placeholder="Add comment..." />
+                          <button onclick="addComment('${post.id}')">Comment</button>
+                          <div>${post.comments.map(c => `<div class='comment'><strong>ID:</strong> ${c.id}<br>${c.text}</div>`).join('')}</div>`;
+        container.appendChild(div);
+      });
+    }
+
+    function toggleAdminSlide() {
+      const slide = document.getElementById('adminSlide');
+      slide.classList.toggle('active');
+    }
+
+    function verifyAdminCode() {
+      const code = document.getElementById('adminCodeInput').value.trim();
+      if (code === SECRET_CODE) {
+        document.getElementById('adminPanel').style.display = 'block';
+        document.getElementById('adminSlide').style.display = 'none';
+      } else {
+        alert("Wrong code.");
+      }
+    }
+
+    window.onload = () => {
+      renderPosts();
+    }
+
+    // --- Incoming call notification logic ---
+    function getCurrentUsername() {
+      return localStorage.getItem('yourUsername') || '';
+    }
+
+    document.getElementById('yourUsernameInput').addEventListener('input', function() {
+      localStorage.setItem('yourUsername', this.value.trim());
+    });
+
+    // On page load, restore username
+    window.addEventListener('DOMContentLoaded', function() {
+      const saved = localStorage.getItem('yourUsername') || '';
+      document.getElementById('yourUsernameInput').value = saved;
+    });
+
+    // Listen for localStorage call events
+    window.addEventListener("storage", function(e) {
+      if (!e.key) return;
+      if (e.key.startsWith("voicecall_")) {
+        let data;
+        try { data = JSON.parse(e.newValue); } catch { return; }
+        if (!data) return;
+        // Always get the current username from localStorage
+        const username = getCurrentUsername();
+        if (username && data.to && data.to === username && data.status === "ringing") {
+          showIncomingCall(data.from, e.key);
+        }
+      }
+    });
+
+    // Show incoming call notification
+    function showIncomingCall(fromUser, key) {
+      const incomingDiv = document.getElementById('incomingCall');
+      document.getElementById('incomingMsg').textContent = `Join ${fromUser}'s call?`;
+      incomingDiv.classList.add('active');
+      incomingDiv.dataset.callKey = key;
+      incomingDiv.dataset.fromUser = fromUser;
+    }
+
+    // Accept call: open call.html with usernames in URL
+    function acceptCall() {
+      const incomingDiv = document.getElementById('incomingCall');
+      const key = incomingDiv.dataset.callKey;
+      const fromUser = incomingDiv.dataset.fromUser;
+      const username = getCurrentUsername();
+      // Notify caller
+      localStorage.setItem(key, JSON.stringify({
+        from: fromUser,
+        to: username,
+        status: "accepted",
+        timestamp: Date.now()
+      }));
+      incomingDiv.classList.remove('active');
+      // Redirect to call.html with both usernames as query params
+      window.location.href = `call.html?your=${encodeURIComponent(username)}&call=${encodeURIComponent(fromUser)}`;
+    }
+
+    // Reject call: notify caller, show fail message
+    function rejectCall() {
+      const incomingDiv = document.getElementById('incomingCall');
+      const key = incomingDiv.dataset.callKey;
+      const fromUser = incomingDiv.dataset.fromUser;
+      const username = getCurrentUsername();
+      // Notify caller
+      localStorage.setItem(key, JSON.stringify({
+        from: fromUser,
+        to: username,
+        status: "rejected",
+        timestamp: Date.now()
+      }));
+      incomingDiv.classList.remove('active');
+      document.getElementById('failMsg').style.display = 'block';
+      setTimeout(() => {
+        document.getElementById('failMsg').style.display = 'none';
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
+

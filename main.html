@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Main | anti-iboss-union</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Courier New', monospace;
+      background: #0a0a0a;
+      color: #00ffcc;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    header {
+      width: 100%;
+      padding: 1em;
+      background-color: #111;
+      border-bottom: 2px solid #00ffcc;
+      text-align: center;
+      position: relative;
+      animation: fadeIn 1s ease-in-out;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.5em;
+    }
+    #adminToggle {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: #000;
+      color: #00ffcc;
+      border: 1px solid #00ffcc;
+      border-radius: 5px;
+      padding: 5px 10px;
+      font-size: 0.9em;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    #adminToggle:hover {
+      background: #00ccaa;
+      color: #000;
+    }
+    #accountTag {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #00ffcc;
+      color: #000;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-weight: bold;
+      animation: fadeIn 2s ease-in-out;
+    }
+    #adminBox {
+      position: absolute;
+      top: 50px;
+      left: 10px;
+      background: #111;
+      border: 1px solid #00ffcc;
+      padding: 1em;
+      display: none;
+      border-radius: 10px;
+      animation: slideOut 0.5s forwards;
+    }
+    main {
+      flex: 1;
+      padding: 2em;
+      text-align: center;
+      animation: slideIn 1s ease-in-out;
+    }
+    input[type="text"] {
+      padding: 0.5em;
+      font-size: 1em;
+      border: 1px solid #00ffcc;
+      background-color: #000;
+      color: #00ffcc;
+      border-radius: 5px;
+      margin: 0.5em 0;
+      width: 100%;
+      max-width: 300px;
+    }
+    button {
+      padding: 0.5em 1em;
+      background-color: #00ffcc;
+      border: none;
+      border-radius: 5px;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #00ccaa;
+    }
+    footer {
+      width: 100%;
+      padding: 1em;
+      text-align: center;
+      font-size: 0.9em;
+      color: #777;
+      border-top: 1px solid #333;
+      background-color: #111;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; } to { opacity: 1; }
+    }
+    @keyframes slideIn {
+      from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes slideOut {
+      from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>anti-iboss-union</h1>
+    <div id="adminToggle" onclick="toggleAdminBox()">Admin</div>
+    <div id="accountTag" style="display:none"></div>
+    <div id="adminBox">
+      <input type="text" id="adminCode" placeholder="Enter Admin Code" /><br><br>
+      <input type="text" id="deleteUser" placeholder="Username to delete" /><br><br>
+      <button onclick="deleteUser()">Delete User</button>
+    </div>
+  </header>
+  <main>
+    <input type="text" id="username" placeholder="Enter your name" />
+    <button id="registerBtn" onclick="register()">Register</button>
+    <p id="registerMessage"></p>
+    <br>
+    <button onclick="goToSharePage()">Go to Sharing Page</button>
+  </main>
+  <footer>
+    ✊ anti-iboss-union 2025
+  </footer>
+  <script>
+    const SECRET_CODE = 'delete4freedom';
+    let storedUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+
+    function register() {
+      if (localStorage.getItem('registeredOnce') === 'true') {
+        document.getElementById('registerMessage').textContent = '✔️ Already registered';
+        return;
+      }
+      const name = document.getElementById('username').value.trim();
+      if (!name) return;
+
+      storedUsers.push(name);
+      localStorage.setItem('registeredUsers', JSON.stringify(storedUsers));
+      localStorage.setItem('registeredOnce', 'true');
+      localStorage.setItem('currentUser', name);
+      document.getElementById('registerMessage').textContent = `✔️ Registered as ${name}`;
+      document.getElementById('accountTag').textContent = name;
+      document.getElementById('accountTag').style.display = 'block';
+    }
+
+    function goToSharePage() {
+      const allowedUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+      const currentUser = localStorage.getItem('currentUser');
+
+      if (allowedUsers.includes(currentUser)) {
+        window.location.href = 'share.html';
+      } else {
+        alert('🚫 Error 5083: user not registered');
+      }
+    }
+
+    function deleteUser() {
+      const code = document.getElementById('adminCode').value.trim();
+      const target = document.getElementById('deleteUser').value.trim();
+
+      if (code === SECRET_CODE && storedUsers.includes(target)) {
+        const index = storedUsers.indexOf(target);
+        storedUsers.splice(index, 1);
+        localStorage.setItem('registeredUsers', JSON.stringify(storedUsers));
+
+        if (localStorage.getItem('currentUser') === target) {
+          localStorage.removeItem('registeredOnce');
+          localStorage.removeItem('currentUser');
+          document.getElementById('accountTag').style.display = 'none';
+          document.getElementById('registerBtn').disabled = true;
+          document.getElementById('username').disabled = true;
+          document.getElementById('registerMessage').textContent = "❌ Account deleted. Only admins can re-enable registration.";
+        }
+
+        document.getElementById('deleteUser').value = '';
+      } else {
+        alert('❌ Invalid admin code or user not found.');
+      }
+    }
+
+    function toggleAdminBox() {
+      const box = document.getElementById('adminBox');
+      box.style.display = box.style.display === 'block' ? 'none' : 'block';
+    }
+
+    window.onload = () => {
+      const current = localStorage.getItem('currentUser');
+      if (current) {
+        document.getElementById('accountTag').textContent = current;
+        document.getElementById('accountTag').style.display = 'block';
+      }
+    };
+  </script>
+</body>
+</html>
