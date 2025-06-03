@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Main | anti-iboss-union</title>
   <style>
     body {
@@ -22,10 +22,6 @@
       color: #00ffcc;
       text-align: center;
       padding: 1em;
-    }
-    header {
-      position: relative;
-      border-top: 1px solid #333;
       border-bottom: 2px solid #00ffcc;
     }
     #adminToggle {
@@ -42,8 +38,8 @@
       position: absolute;
       top: 10px;
       right: 10px;
-      border: 1px solid #00ffcc;
-      background: #000;
+      background: #00ffcc;
+      color: #000;
       padding: 5px 10px;
       border-radius: 5px;
       font-weight: bold;
@@ -91,9 +87,8 @@
       list-style: none;
       padding: 0;
     }
-    #userList {
-      margin-top: 2em;
-      text-align: left;
+    li {
+      margin: 5px;
     }
   </style>
 </head>
@@ -103,14 +98,14 @@
     <div id="adminToggle" onclick="toggleAdminBox()">Admin</div>
     <div id="accountTag"></div>
     <div id="adminBox">
-      <input type="text" id="adminCode" placeholder="Enter Admin Code" /><br><br>
-      <input type="text" id="deleteUser" placeholder="Username to delete" /><br><br>
+      <input type="text" id="adminCode" placeholder="Enter Admin Code"/><br><br>
+      <input type="text" id="deleteUser" placeholder="Username to delete"/><br><br>
       <button onclick="deleteUser()">Delete User</button>
     </div>
   </header>
 
   <main>
-    <input type="text" id="username" placeholder="Enter your name" />
+    <input type="text" id="username" placeholder="Enter your name"/>
     <button onclick="register()">Register</button>
     <p id="registerMessage"></p>
 
@@ -125,34 +120,80 @@
 
   <footer>✊ anti-iboss-union 2025</footer>
 
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
   <script>
     const SECRET_CODE = 'delete4freedom';
 
+    const firebaseConfig = {
+      apiKey: "AIzaSyCmC7B...bC4",
+      authDomain: "ibossuionanti.firebaseapp.com",
+      projectId: "ibossuionanti",
+      storageBucket: "ibossuionanti.appspot.com",
+      messagingSenderId: "273040067267",
+      appId: "1:273040067267:web:b47bd79c4363e9a8710ff2",
+      measurementId: "G-R5Z8KNKXNT"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
     async function register() {
       const name = document.getElementById('username').value.trim();
-      if (!name) return;
+      if (!name) return alert("Please enter a name!");
 
-      const res = await fetch('/api/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: name })
-      });
+      try {
+        await db.collection("users").doc(name).set({ timestamp: Date.now() });
 
-      const data = await res.json();
-      if (data.success) {
-        localStorage.setItem('currentUser', name);
-        document.getElementById('registerMessage').textContent = `✔️ Registered as ${data.username}`;
-        document.getElementById('accountTag').textContent = data.username;
+        localStorage.setItem("currentUser", name);
+        localStorage.setItem("registeredOnce", "true");
+
+        document.getElementById('registerMessage').textContent = `✔️ Registered as ${name}`;
+        document.getElementById('accountTag').textContent = name;
         document.getElementById('accountTag').style.display = 'block';
+
         loadUsers();
-      } else {
-        document.getElementById('registerMessage').textContent = data.message || '❌ Failed to register';
+      } catch (error) {
+        alert("❌ Registration failed.");
+        console.error(error);
+      }
+    }
+
+    async function deleteUser() {
+      const code = document.getElementById('adminCode').value.trim();
+      const user = document.getElementById('deleteUser').value.trim();
+      if (code !== SECRET_CODE) return alert("❌ Invalid admin code");
+
+      try {
+        await db.collection("users").doc(user).delete();
+        if (localStorage.getItem("currentUser") === user) {
+          localStorage.removeItem("registeredOnce");
+          localStorage.removeItem("currentUser");
+          document.getElementById('accountTag').style.display = 'none';
+          document.getElementById('registerMessage').textContent = '❌ Your account was deleted.';
+        }
+        document.getElementById('deleteUser').value = '';
+        loadUsers();
+      } catch (error) {
+        alert("❌ Failed to delete user.");
+        console.error(error);
       }
     }
 
     async function loadUsers() {
-      const res = await fetch('/api/users');
-      const users = await res.json();
+      try {
+        const snapshot = await db.collection("users").get();
+        const users = [];
+        snapshot.forEach(doc => users.push(doc.id));
+        renderUserList(users);
+      } catch (error) {
+        console.error("Error loading users:", error);
+      }
+    }
+
+    function renderUserList(users) {
       const list = document.getElementById('userDisplayList');
       list.innerHTML = '';
       users.forEach(user => {
@@ -160,29 +201,6 @@
         li.textContent = user;
         list.appendChild(li);
       });
-    }
-
-    async function deleteUser() {
-      const code = document.getElementById('adminCode').value.trim();
-      const user = document.getElementById('deleteUser').value.trim();
-
-      const res = await fetch('/api/delete', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username: user, code })
-      });
-
-      const data = await res.json();
-      alert(data.message);
-      if (data.success) {
-        const current = localStorage.getItem('currentUser');
-        if (current === user) {
-          localStorage.removeItem('currentUser');
-          document.getElementById('accountTag').style.display = 'none';
-          document.getElementById('registerMessage').textContent = '❌ Your account was deleted.';
-        }
-        loadUsers();
-      }
     }
 
     function toggleAdminBox() {
@@ -211,4 +229,3 @@
   </script>
 </body>
 </html>
-
