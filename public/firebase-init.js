@@ -1,11 +1,12 @@
 // firebase-init.js
 const firebaseConfig = {
-  apiKey: " AIzaSyB3X6NyiQg5bcJqKvEB9bB_0Xvp1JFiEiM",
-  authDomain: "uion-461720.firebaseapp.com",
-  projectId: "uion-461720",
-  storageBucket: "uion-461720.appspot.com",
-  messagingSenderId: "XXXXXXX",
-  appId: "XXXXXXXXXX"
+  apiKey: "AIzaSyDiOqkNaXF0vilCiVVBtpTJR-RUdPVJLJ0",
+    authDomain: "ibossuionanti.firebaseapp.com",
+    projectId: "ibossuionanti",
+    storageBucket: "ibossuionanti.firebasestorage.app",
+    messagingSenderId: "1065911355649",
+    appId: "1:1065911355649:web:aceb782179cb7164997300",
+    measurementId: "G-38ZQ68JHMH"
 };
 
 firebase.initializeApp(firebaseConfig);
