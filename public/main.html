@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Main | anti-iboss-union</title>
   <style>
     body {
@@ -18,201 +18,267 @@
     }
     header, footer {
       width: 100%;
-      background-color: #111;
+      background: #111;
       color: #00ffcc;
-      padding: 1em;
       text-align: center;
+      padding: 1em;
+    }
+    header {
+      position: relative;
+      text-align: center;
+      border-top: 1px solid #333;
+      border-bottom: 2px solid #00ffcc;
+    }
+    #adminToggle {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      cursor: pointer;
+      border: 1px solid #00ffcc;
+      background: #000;
+      border: 1px solid #00ffcc;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
     }
     #accountTag {
       position: absolute;
-      top: 10px;
-      right: 10px;
-      background: #00ffcc;
-      color: #000;
-      padding: 5px 10px;
+@@ -47,163 +45,162 @@
       border-radius: 5px;
       font-weight: bold;
+    }
+    #adminBox {
+      display: none;
+      position: absolute;
+      top: 50px;
+      left: 10px;
+      background: #111;
+      border: 1px solid #00ffcc;
+      padding: 10px;
+      border-radius: 10px;
     }
     main {
       flex: 1;
       padding: 2em;
       text-align: center;
     }
-    input, button {
+    input[type="text"] {
       padding: 0.5em;
-      font-size: 1em;
       margin: 0.5em;
+      width: 300px;
+      background: #000;
+      border: 1px solid #00ffcc;
+      background: #000;
+      color: #00ffcc;
       border-radius: 5px;
+      width: 100%;
+      max-width: 300px;
+      margin: 0.5em 0;
     }
     button {
+      padding: 0.5em 1em;
+      margin: 0.3em;
       background: #00ffcc;
       color: #000;
       font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
       cursor: pointer;
+      margin: 0.3em;
     }
-    #userListContainer {
-      margin-top: 2em;
-      max-width: 300px;
-      text-align: left;
+    button:hover {
+      background: #00ccaa;
     }
-    .username-entry {
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+    #adminBox {
+      display: none;
+      position: absolute;
+      top: 50px;
+      left: 10px;
       background: #111;
-      margin: 0.25em 0;
-      padding: 0.5em;
-      border-radius: 4px;
+      margin: 5px;
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #00ffcc;
+      padding: 1em;
+      border-radius: 10px;
+    }
+    #userList {
+      margin-top: 2em;
+      text-align: left;
     }
   </style>
 </head>
 <body>
   <header>
     <h1>anti-iboss-union</h1>
-    <div id="accountTag" style="display:none;"></div>
+    <div id="adminToggle" onclick="toggleAdminBox()">Admin</div>
+    <div id="accountTag" style="display: none;"></div>
+    <div id="accountTag" style="display:none"></div>
+    <div id="adminBox">
+      <input type="text" id="adminCode" placeholder="Enter Admin Code" /><br><br>
+      <input type="text" id="deleteUser" placeholder="Username to delete" /><br><br>
+      <input type="text" id="adminCode" placeholder="Enter Admin Code"><br><br>
+      <input type="text" id="deleteUser" placeholder="Username to delete"><br><br>
+      <button onclick="deleteUser()">Delete User</button>
+    </div>
   </header>
 
   <main>
-    <input type="text" id="usernameInput" placeholder="Enter your name">
-    <button onclick="registerUser()">Register</button>
+    <input type="text" id="username" placeholder="Enter your name" />
+    <input type="text" id="username" placeholder="Enter your name">
+    <button onclick="register()">Register</button>
     <p id="registerMessage"></p>
 
-    <button onclick="goToShare()">Go to Sharing Page</button>
-    <button onclick="goToTest()">Go to Test Page</button>
+    <button onclick="goToSharePage()">Go to Sharing Page</button>
+    <button onclick="goToTestPage()">Go to Test Page</button>
 
-    <div id="userListContainer">
-      <h3>Registered Rebels</h3>
-      <div id="userList"></div>
+    <h2>Registered Rebels:</h2>
+    <ul id="userList"></ul>
+    <div id="userList">
+      <h3>Registered Rebels:</h3>
+      <ul id="userDisplayList"></ul>
     </div>
   </main>
 
+  <footer>✊ anti-iboss-union 2025</footer>
   <footer>
     ✊ anti-iboss-union 2025
   </footer>
 
-  <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-database.js"></script>
-  <script src="/firebase-init.js"></script>
-<script>
-  // Initialize Firebase Database
-  const db = firebase.database();
-
   <script>
-    const db = firebase.database();
-  // Register user
-  function registerUser() {
-    const name = document.getElementById('usernameInput').value.trim();
-    if (!name) return;
+    const SECRET_CODE = 'delete4freedom';
+    let storedUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
 
-    function registerUser() {
-      const name = document.getElementById('usernameInput').value.trim();
+    async function register() {
+      const name = document.getElementById('username').value.trim();
       if (!name) return;
-    // Store current user in localStorage
-    localStorage.setItem('currentUser', name);
-    document.getElementById('accountTag').textContent = name;
-    document.getElementById('accountTag').style.display = 'block';
-    document.getElementById('registerMessage').textContent = `✔️ Registered as ${name}`;
 
-      // Store current user in localStorage
+      const res = await fetch('/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: name })
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        localStorage.setItem('currentUser', name);
+        document.getElementById('registerMessage').textContent = `✔️ Registered as ${data.username}`;
+        document.getElementById('accountTag').textContent = data.username;
+        document.getElementById('accountTag').style.display = 'block';
+        loadUsers();
+      }
+    }
+
+    async function loadUsers() {
+      const res = await fetch('/api/users');
+      const users = await res.json();
+      const list = document.getElementById('userList');
+    function renderUserList() {
+      const list = document.getElementById('userDisplayList');
+      list.innerHTML = '';
+      users.forEach(user => {
+      storedUsers.forEach(user => {
+        const li = document.createElement('li');
+        li.textContent = user;
+        list.appendChild(li);
+      });
+    }
+
+    async function deleteUser() {
+      const code = document.getElementById('adminCode').value.trim();
+      const user = document.getElementById('deleteUser').value.trim();
+    function register() {
+      const name = document.getElementById('username').value.trim();
+      if (!name) return;
+
+      const res = await fetch('/api/delete', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username: user, code })
+      });
+      if (!storedUsers.includes(name)) {
+        storedUsers.push(name);
+        localStorage.setItem('registeredUsers', JSON.stringify(storedUsers));
+      }
+
+      localStorage.setItem('registeredOnce', 'true');
       localStorage.setItem('currentUser', name);
+
+      const data = await res.json();
+      alert(data.message);
+      document.getElementById('registerMessage').textContent = `✔️ Registered as ${name}`;
       document.getElementById('accountTag').textContent = name;
       document.getElementById('accountTag').style.display = 'block';
-      document.getElementById('registerMessage').textContent = `✔️ Registered as ${name}`;
-    // Add user to Firebase
-    db.ref('users/' + name).set({ name });
 
-      // Push user to Firebase
-      db.ref('users/' + name).set({ name });
-    // Reload user list
-    loadUsers();
-  }
-
-      // Reload user list
-      loadUsers();
-  // Load users from Firebase
-  function loadUsers() {
-    db.ref('users').once('value', snapshot => {
-      const userList = document.getElementById('userList');
-      userList.innerHTML = ''; // Clear existing list
-      snapshot.forEach(child => {
-        const entry = document.createElement('div');
-        entry.className = 'username-entry';
-        entry.textContent = child.key;
-        userList.appendChild(entry);
-      });
-    });
-  }
-
-  // Navigate to share page
-  function goToShare() {
-    const name = localStorage.getItem('currentUser');
-    if (!name) {
-      alert("🚫 Error 5083: user not registered");
-      return;
+      if (data.success) {
+        const current = localStorage.getItem('currentUser');
+        if (current === user) {
+      renderUserList();
     }
-    // Check if user exists in Firebase
-    db.ref('users/' + name).once('value', snapshot => {
-      if (snapshot.exists()) {
+
+    function deleteUser() {
+      const code = document.getElementById('adminCode').value.trim();
+      const target = document.getElementById('deleteUser').value.trim();
+
+      if (code === SECRET_CODE && storedUsers.includes(target)) {
+        storedUsers = storedUsers.filter(user => user !== target);
+        localStorage.setItem('registeredUsers', JSON.stringify(storedUsers));
+
+        if (localStorage.getItem('currentUser') === target) {
+          localStorage.removeItem('registeredOnce');
+          localStorage.removeItem('currentUser');
+          document.getElementById('accountTag').style.display = 'none';
+          document.getElementById('registerMessage').textContent = '❌ Your account was deleted.';
+          document.getElementById('registerMessage').textContent = "❌ Account deleted. Only admins can re-enable registration.";
+        }
+        loadUsers();
+      }
+    }
+
+    function toggleAdminBox() {
+      const box = document.getElementById('adminBox');
+      box.style.display = box.style.display === 'block' ? 'none' : 'block';
+        renderUserList();
+        document.getElementById('deleteUser').value = '';
+      } else {
+        alert('❌ Invalid admin code or user not found.');
+      }
+    }
+
+    function goToSharePage() {
+      const currentUser = localStorage.getItem('currentUser');
+      if (!currentUser) return alert('🚫 Error 5083: user not registered');
+      window.location.href = 'share.html';
+      if (storedUsers.includes(currentUser)) {
         window.location.href = 'share.html';
       } else {
-        alert("🚫 Error 5083: user not registered");
+        alert('🚫 Error 5083: user not registered');
       }
-    });
-  }
-
-    function loadUsers() {
-      db.ref('users').once('value', snapshot => {
-        const userList = document.getElementById('userList');
-        userList.innerHTML = ''; // clear old
-        snapshot.forEach(child => {
-          const entry = document.createElement('div');
-          entry.className = 'username-entry';
-          entry.textContent = child.key;
-          userList.appendChild(entry);
-        });
-      });
-  // Navigate to test page
-  function goToTest() {
-    window.location.href = 'test.js'; // Adjust if it's a different file
-  }
-
-  // On page load
-  window.onload = () => {
-    const name = localStorage.getItem('currentUser');
-    if (name) {
-      document.getElementById('accountTag').textContent = name;
-      document.getElementById('accountTag').style.display = 'block';
-    }
-    loadUsers();
-  };
-</script
-    
-    function goToShare() {
-      const name = localStorage.getItem('currentUser');
-      if (!name) {
-        alert("🚫 Error 5083: user not registered");
-        return;
-      }
-      // Check if registered in Firebase
-      db.ref('users/' + name).once('value', snapshot => {
-        if (snapshot.exists()) {
-          window.location.href = 'share.html';
-        } else {
-          alert("🚫 Error 5083: user not registered");
-        }
-      });
     }
 
-    function goToTest() {
-      window.location.href = 'test.js'; // or test.html if that’s what you meant
+    function goToTestPage() {
+      window.location.href = 'test.js';
     }
 
-    // On load
+    function toggleAdminBox() {
+      const box = document.getElementById('adminBox');
+      box.style.display = box.style.display === 'block' ? 'none' : 'block';
+    }
+
     window.onload = () => {
-      const name = localStorage.getItem('currentUser');
-      if (name) {
-        document.getElementById('accountTag').textContent = name;
+      const current = localStorage.getItem('currentUser');
+      if (current) {
+        document.getElementById('accountTag').textContent = current;
         document.getElementById('accountTag').style.display = 'block';
       }
       loadUsers();
+      renderUserList();
     };
   </script>
 </body>
