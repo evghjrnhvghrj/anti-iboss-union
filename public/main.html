@@ -25,7 +25,6 @@
     }
     header {
       position: relative;
-      text-align: center;
       border-top: 1px solid #333;
       border-bottom: 2px solid #00ffcc;
     }
@@ -36,16 +35,19 @@
       cursor: pointer;
       border: 1px solid #00ffcc;
       background: #000;
-      border: 1px solid #00ffcc;
       padding: 5px 10px;
       border-radius: 5px;
-      cursor: pointer;
     }
     #accountTag {
       position: absolute;
-@@ -47,163 +45,162 @@
+      top: 10px;
+      right: 10px;
+      border: 1px solid #00ffcc;
+      background: #000;
+      padding: 5px 10px;
       border-radius: 5px;
       font-weight: bold;
+      display: none;
     }
     #adminBox {
       display: none;
@@ -64,16 +66,13 @@
     }
     input[type="text"] {
       padding: 0.5em;
-      margin: 0.5em;
-      width: 300px;
-      background: #000;
-      border: 1px solid #00ffcc;
-      background: #000;
-      color: #00ffcc;
-      border-radius: 5px;
+      margin: 0.5em 0;
       width: 100%;
       max-width: 300px;
-      margin: 0.5em 0;
+      background: #000;
+      border: 1px solid #00ffcc;
+      color: #00ffcc;
+      border-radius: 5px;
     }
     button {
       padding: 0.5em 1em;
@@ -83,9 +82,7 @@
       font-weight: bold;
       border: none;
       border-radius: 5px;
-      font-weight: bold;
       cursor: pointer;
-      margin: 0.3em;
     }
     button:hover {
       background: #00ccaa;
@@ -93,20 +90,6 @@
     ul {
       list-style: none;
       padding: 0;
-    }
-    li {
-    #adminBox {
-      display: none;
-      position: absolute;
-      top: 50px;
-      left: 10px;
-      background: #111;
-      margin: 5px;
-      padding: 8px;
-      border-radius: 5px;
-      border: 1px solid #00ffcc;
-      padding: 1em;
-      border-radius: 10px;
     }
     #userList {
       margin-top: 2em;
@@ -118,28 +101,22 @@
   <header>
     <h1>anti-iboss-union</h1>
     <div id="adminToggle" onclick="toggleAdminBox()">Admin</div>
-    <div id="accountTag" style="display: none;"></div>
-    <div id="accountTag" style="display:none"></div>
+    <div id="accountTag"></div>
     <div id="adminBox">
       <input type="text" id="adminCode" placeholder="Enter Admin Code" /><br><br>
       <input type="text" id="deleteUser" placeholder="Username to delete" /><br><br>
-      <input type="text" id="adminCode" placeholder="Enter Admin Code"><br><br>
-      <input type="text" id="deleteUser" placeholder="Username to delete"><br><br>
       <button onclick="deleteUser()">Delete User</button>
     </div>
   </header>
 
   <main>
     <input type="text" id="username" placeholder="Enter your name" />
-    <input type="text" id="username" placeholder="Enter your name">
     <button onclick="register()">Register</button>
     <p id="registerMessage"></p>
 
     <button onclick="goToSharePage()">Go to Sharing Page</button>
     <button onclick="goToTestPage()">Go to Test Page</button>
 
-    <h2>Registered Rebels:</h2>
-    <ul id="userList"></ul>
     <div id="userList">
       <h3>Registered Rebels:</h3>
       <ul id="userDisplayList"></ul>
@@ -147,13 +124,9 @@
   </main>
 
   <footer>✊ anti-iboss-union 2025</footer>
-  <footer>
-    ✊ anti-iboss-union 2025
-  </footer>
 
   <script>
     const SECRET_CODE = 'delete4freedom';
-    let storedUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
 
     async function register() {
       const name = document.getElementById('username').value.trim();
@@ -172,18 +145,17 @@
         document.getElementById('accountTag').textContent = data.username;
         document.getElementById('accountTag').style.display = 'block';
         loadUsers();
+      } else {
+        document.getElementById('registerMessage').textContent = data.message || '❌ Failed to register';
       }
     }
 
     async function loadUsers() {
       const res = await fetch('/api/users');
       const users = await res.json();
-      const list = document.getElementById('userList');
-    function renderUserList() {
       const list = document.getElementById('userDisplayList');
       list.innerHTML = '';
       users.forEach(user => {
-      storedUsers.forEach(user => {
         const li = document.createElement('li');
         li.textContent = user;
         list.appendChild(li);
@@ -193,49 +165,21 @@
     async function deleteUser() {
       const code = document.getElementById('adminCode').value.trim();
       const user = document.getElementById('deleteUser').value.trim();
-    function register() {
-      const name = document.getElementById('username').value.trim();
-      if (!name) return;
 
       const res = await fetch('/api/delete', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username: user, code })
       });
-      if (!storedUsers.includes(name)) {
-        storedUsers.push(name);
-        localStorage.setItem('registeredUsers', JSON.stringify(storedUsers));
-      }
-
-      localStorage.setItem('registeredOnce', 'true');
-      localStorage.setItem('currentUser', name);
 
       const data = await res.json();
       alert(data.message);
-      document.getElementById('registerMessage').textContent = `✔️ Registered as ${name}`;
-      document.getElementById('accountTag').textContent = name;
-      document.getElementById('accountTag').style.display = 'block';
-
       if (data.success) {
         const current = localStorage.getItem('currentUser');
         if (current === user) {
-      renderUserList();
-    }
-
-    function deleteUser() {
-      const code = document.getElementById('adminCode').value.trim();
-      const target = document.getElementById('deleteUser').value.trim();
-
-      if (code === SECRET_CODE && storedUsers.includes(target)) {
-        storedUsers = storedUsers.filter(user => user !== target);
-        localStorage.setItem('registeredUsers', JSON.stringify(storedUsers));
-
-        if (localStorage.getItem('currentUser') === target) {
-          localStorage.removeItem('registeredOnce');
           localStorage.removeItem('currentUser');
           document.getElementById('accountTag').style.display = 'none';
           document.getElementById('registerMessage').textContent = '❌ Your account was deleted.';
-          document.getElementById('registerMessage').textContent = "❌ Account deleted. Only admins can re-enable registration.";
         }
         loadUsers();
       }
@@ -244,31 +188,16 @@
     function toggleAdminBox() {
       const box = document.getElementById('adminBox');
       box.style.display = box.style.display === 'block' ? 'none' : 'block';
-        renderUserList();
-        document.getElementById('deleteUser').value = '';
-      } else {
-        alert('❌ Invalid admin code or user not found.');
-      }
     }
 
     function goToSharePage() {
       const currentUser = localStorage.getItem('currentUser');
       if (!currentUser) return alert('🚫 Error 5083: user not registered');
       window.location.href = 'share.html';
-      if (storedUsers.includes(currentUser)) {
-        window.location.href = 'share.html';
-      } else {
-        alert('🚫 Error 5083: user not registered');
-      }
     }
 
     function goToTestPage() {
       window.location.href = 'test.js';
-    }
-
-    function toggleAdminBox() {
-      const box = document.getElementById('adminBox');
-      box.style.display = box.style.display === 'block' ? 'none' : 'block';
     }
 
     window.onload = () => {
@@ -278,8 +207,8 @@
         document.getElementById('accountTag').style.display = 'block';
       }
       loadUsers();
-      renderUserList();
     };
   </script>
 </body>
 </html>
+
